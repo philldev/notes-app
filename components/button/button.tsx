@@ -50,7 +50,6 @@ const Button: FC<ButtonProps> = ({ children, className, ...rest }) => {
 					: ''
 			}
 			${variant === 'transparent' ? `bg-transparent ${textColor[color]}` : ''}
-
 			${className}`}
 			{...rest}
 		>
