@@ -3,7 +3,7 @@ module.exports = {
 	darkMode: false, // or 'media' or 'class'
 	theme: {
 		colors: {
-			transparent : 'transparent',
+			transparent: 'transparent',
 			accent: {
 				primary: '#FFB224',
 				danger: '#F2555A',
@@ -35,6 +35,8 @@ module.exports = {
 	variants: {
 		extend: {
 			borderColor: ['active'],
+			borderOpacity: ['hover'],
+			opacity: ['disabled'],
 		},
 	},
 	plugins: [],
