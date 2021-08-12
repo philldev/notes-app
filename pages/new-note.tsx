@@ -164,11 +164,41 @@ const createBlock = (type: BlockTypes): NoteBlock => {
 			return {
 				id: Date.now().toString(),
 				type: 'todos',
-				todos: [],
+				todos: [
+					{
+						id: '1',
+						text: '',
+						completed: false,
+					},
+				],
 			}
 		default:
 			throw new Error('Something went wrong')
 	}
+}
+
+interface NoteTodosProps {
+	todos: Todo[]
+	onAddTodo: () => void
+}
+
+const NoteTodos: FC<NoteTodosProps> = (props) => {
+	return (
+		<div className='flex flex-col gap-2'>
+			{props.todos.map((t) => (
+				<NoteBoxTodoItem
+					editing
+					key={t.id}
+					text={t.text}
+					completed={t.completed}
+				/>
+			))}
+			<button onClick={props.onAddTodo} className='flex items-center text-xs opacity-50 h-7 hover:opacity-80'>
+				<PlusIcon className='w-4 h-4 mr-2' />
+				New Todo
+			</button>
+		</div>
+	)
 }
 
 export default function NewNote() {
@@ -194,9 +224,29 @@ export default function NewNote() {
 					}
 					if (block.type === 'todos') {
 						return (
-							<div>
-								<NoteBoxTodoItem text='' editing />
-							</div>
+							<NoteTodos
+								onAddTodo={() => {
+									setBlocks(
+										blocks.map((b) =>
+											b.id === block.id
+												? {
+														...block,
+														todos: [
+															...block.todos,
+															{
+																id: Date.now().toString(),
+																text: '',
+																completed: false,
+															},
+														],
+												  }
+												: b
+										)
+									)
+								}}
+								key={idx}
+								todos={block.todos}
+							/>
 						)
 					}
 					return null
