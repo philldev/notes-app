@@ -4,6 +4,7 @@ import HomeHeader from '../components/home/HomeHeader'
 import HomeNavigation from '../components/home/HomeNavigation'
 import { Tab } from '@headlessui/react'
 import NoteList from '../components/notes/NoteList'
+import Page from '../components/layout/Page'
 export interface Todo {
 	id: string
 	completed: boolean
@@ -176,7 +177,7 @@ const folders: Folder[] = [
 
 export default function Home() {
 	return (
-		<div className='flex flex-col h-screen pt-4 overflow-hidden'>
+		<Page>
 			<HomeHeader />
 			<Tab.Group as={Fragment}>
 				<Tab.List as={Fragment}>
@@ -191,6 +192,6 @@ export default function Home() {
 					</Tab.Panel>
 				</Tab.Panels>
 			</Tab.Group>
-		</div>
+		</Page>
 	)
 }
