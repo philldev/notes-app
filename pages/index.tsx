@@ -1,9 +1,9 @@
-import React from 'react'
-import AddNoteButton from '../components/notes/AddNoteButton'
+import React, { Fragment } from 'react'
+import FolderList from '../components/folders/FolderList'
+import HomeHeader from '../components/home/HomeHeader'
+import HomeNavigation from '../components/home/HomeNavigation'
+import { Tab } from '@headlessui/react'
 import NoteList from '../components/notes/NoteList'
-import NotesHeader from '../components/notes/NotesHeader'
-import NotesNavigation from '../components/notes/NotesNavigation'
-
 export interface Todo {
 	id: string
 	completed: boolean
@@ -21,6 +21,11 @@ export interface Note {
 	>
 	createdAt?: string
 	folder?: string
+}
+
+export interface Folder {
+	id: string
+	name: string
 }
 
 const notes: Note[] = [
@@ -146,13 +151,46 @@ const notes: Note[] = [
 	},
 ]
 
+const folders: Folder[] = [
+	{
+		id: '1',
+		name: 'ToDo',
+	},
+	{
+		id: '2',
+		name: 'Freelancer',
+	},
+	{
+		id: '3',
+		name: 'Daily Life',
+	},
+	{
+		id: '4',
+		name: 'My Targets',
+	},
+	{
+		id: '5',
+		name: 'Quote',
+	},
+]
+
 export default function Home() {
 	return (
 		<div className='flex flex-col h-screen pt-4 overflow-hidden'>
-			<NotesHeader />
-			<NotesNavigation />
-			<NoteList notes={notes} />
-			<AddNoteButton />
+			<HomeHeader />
+			<Tab.Group as={Fragment}>
+				<Tab.List as={Fragment}>
+					<HomeNavigation />
+				</Tab.List>
+				<Tab.Panels as={Fragment}>
+					<Tab.Panel as={Fragment}>
+						<NoteList notes={notes} />
+					</Tab.Panel>
+					<Tab.Panel as={Fragment}>
+						<FolderList folders={folders} />
+					</Tab.Panel>
+				</Tab.Panels>
+			</Tab.Group>
 		</div>
 	)
 }

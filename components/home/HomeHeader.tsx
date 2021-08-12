@@ -1,6 +1,6 @@
 import { DotsCircleHorizontalIcon, SearchIcon } from '@heroicons/react/outline'
 
-const NotesHeader = () => {
+const HomeHeader = () => {
 	return (
 		<div className='flex justify-between px-4 mb-2'>
 			<h3 className='text-xl font-bold'>Notes</h3>
@@ -17,4 +17,4 @@ const NotesHeader = () => {
 	)
 }
 
-export default NotesHeader
+export default HomeHeader
