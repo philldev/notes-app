@@ -180,7 +180,7 @@ export default function Home() {
 		<Page>
 			<HomeHeader />
 			<Tab.Group as={Fragment}>
-				<Tab.List as={Fragment}>
+				<Tab.List>
 					<HomeNavigation />
 				</Tab.List>
 				<Tab.Panels as={Fragment}>
