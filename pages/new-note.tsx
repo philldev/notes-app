@@ -6,7 +6,7 @@ import {
 	PlusIcon,
 } from '@heroicons/react/outline'
 import { PhotographIcon } from '@heroicons/react/solid'
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
 import { Todo } from '.'
 import Page from '../components/layout/Page'
@@ -14,8 +14,9 @@ import MenuItems from '../components/menu/MenuItems'
 import NoteBoxTodoItem from '../components/notes/NoteTodoItem'
 
 interface NoteTextEditableProps {
-	onDelete?: () => void
 	text?: string
+	onDeleteClick?: () => void
+	onBackspaceWhenEmpty: () => void
 }
 
 const NoteTextEditable: FC<NoteTextEditableProps> = (props) => {
@@ -35,6 +36,9 @@ const NoteTextEditable: FC<NoteTextEditableProps> = (props) => {
 			<ContentEditable
 				html={html.current}
 				className='relative z-10 outline-none'
+				onKeyUp={(e) => {
+					if (e.code === 'Backspace') props.onBackspaceWhenEmpty?.()
+				}}
 				onChange={(e) => {
 					e.target.value.length > 0
 						? setHidePlaceholder(true)
@@ -50,7 +54,7 @@ const NoteTextEditable: FC<NoteTextEditableProps> = (props) => {
 				<MenuItems>
 					<Menu.Item>
 						<button
-							onClick={() => props.onDelete && props.onDelete()}
+							onClick={() => props.onDeleteClick && props.onDeleteClick()}
 							className='flex items-center pl-2 text-sm h-9'
 						>
 							Delete
@@ -128,36 +132,15 @@ interface AddBlockButtonProps {
 
 const AddBlockButton: FC<AddBlockButtonProps> = (props) => {
 	return (
-		<div className='relative'>
-			<Menu>
-				{({ open }) => (
-					<>
-						<Menu.Button
-							className={`flex items-center w-full gap-2 px-2 py-2 outline-none text-text-2 hover:bg-bg-2 ${
-								open ? 'bg-bg-2' : ''
-							}`}
-						>
-							<PlusIcon className='w-4 h-4' />
-							<span className='self-start flex-1 text-sm font-bold text-left'>
-								Add New
-							</span>
-							{/* <DotsHorizontalIcon className='w-4 h-4' /> */}
-						</Menu.Button>
-						<MenuItems>
-							{noteBlocks.map((block, idx) => (
-								<Menu.Item key={idx}>
-									<button
-										onClick={() => props.onAdd && props.onAdd(block.type)}
-										className='flex items-center pl-2 text-sm h-9'
-									>
-										{block.label}
-									</button>
-								</Menu.Item>
-							))}
-						</MenuItems>
-					</>
-				)}
-			</Menu>
+		<div className='relative flex flex-col'>
+			<button className='flex items-center h-8 gap-2 px-2 text-sm rounded-md text-text-2 hover:bg-bg-2'>
+				<PlusIcon className='w-4 h-4' />
+				<span>Add Text</span>
+			</button>
+			<button className='flex items-center h-8 gap-2 px-2 text-sm rounded-md text-text-2 hover:bg-bg-2'>
+				<PlusIcon className='w-4 h-4' />
+				<span>Add Todo List</span>
+			</button>
 		</div>
 	)
 }
@@ -221,16 +204,50 @@ const NoteTodos: FC<NoteTodosProps> = (props) => {
 
 const NewNoteToolbar = () => {
 	return (
-		<div className='flex px-2 opacity-0 hover:opacity-100'>
-			<button className='flex items-center h-8 gap-2 px-2 rounded-md text-text-2 hover:bg-bg-2'>
+		<div className='flex px-2 transition-all opacity-20 hover:opacity-100'>
+			<button className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2'>
 				<EmojiHappyIcon className='w-4 h-4' />
 				<span className='text-xs'>Add Emoji</span>
 			</button>
-			<button className='flex items-center h-8 gap-2 px-2 rounded-md text-text-2 hover:bg-bg-2'>
+			<button className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2'>
 				<PhotographIcon className='w-4 h-4' />
 				<span className='text-xs'>Add Cover</span>
 			</button>
 		</div>
+	)
+}
+
+interface NoteBlocksEditableProps {
+	blocks: NoteBlock[]
+}
+
+const NoteBlocksEditable: FC<NoteBlocksEditableProps> = (props) => {
+	return (
+		<>
+			{props.blocks.map((block, idx) => {
+				if (block.type === 'text') {
+					return (
+						<NoteTextEditable
+							text={block.text}
+							onBackspaceWhenEmpty={() => {}}
+							onDeleteClick={() => {}}
+							key={idx}
+						/>
+					)
+				}
+				if (block.type === 'todos') {
+					return (
+						<NoteTodos
+							onDeleteTodo={(id) => {}}
+							onAddTodo={() => {}}
+							key={idx}
+							todos={block.todos}
+						/>
+					)
+				}
+				return null
+			})}
+		</>
 	)
 }
 
@@ -244,59 +261,7 @@ export default function NewNote() {
 			<NewNoteToolbar />
 			<div className='flex flex-col flex-1 gap-2 px-4 pt-2'>
 				<NoteTitleEditable />
-				{blocks.map((block, idx) => {
-					if (block.type === 'text') {
-						return (
-							<NoteTextEditable
-								text={block.text}
-								onDelete={() => {
-									setBlocks(blocks.filter((b) => b.id !== block.id))
-								}}
-								key={idx}
-							/>
-						)
-					}
-					if (block.type === 'todos') {
-						return (
-							<NoteTodos
-								onDeleteTodo={(id) => {
-									setBlocks(
-										blocks.map((b) =>
-											b.id === block.id
-												? {
-														...block,
-														todos: [...block.todos.filter((t) => t.id !== id)],
-												  }
-												: b
-										)
-									)
-								}}
-								onAddTodo={() => {
-									setBlocks(
-										blocks.map((b) =>
-											b.id === block.id
-												? {
-														...block,
-														todos: [
-															...block.todos,
-															{
-																id: Date.now().toString(),
-																text: '',
-																completed: false,
-															},
-														],
-												  }
-												: b
-										)
-									)
-								}}
-								key={idx}
-								todos={block.todos}
-							/>
-						)
-					}
-					return null
-				})}
+				<NoteBlocksEditable blocks={blocks} />
 				<AddBlockButton
 					onAdd={(type) => setBlocks([...blocks, createBlock(type)])}
 				/>
