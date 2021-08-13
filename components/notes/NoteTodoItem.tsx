@@ -8,6 +8,7 @@ interface NoteBoxTodoItemProps {
 	editing?: boolean
 	onEditingEnd?: (text: string) => void
 	onEnter?: () => void
+	onBackspaceWhenEmpty?: () => void
 }
 
 const NoteBoxTodoItem: FC<NoteBoxTodoItemProps> = (props) => {
@@ -32,16 +33,15 @@ const NoteBoxTodoItem: FC<NoteBoxTodoItemProps> = (props) => {
 					html={text.current}
 					onKeyUp={(e) => {
 						if (e.code === 'Enter') props.onEnter?.()
+						if (e.code === 'Backspace' && text.current.length === 0)
+							props.onBackspaceWhenEmpty?.()
 					}}
 					onBlur={() => props.onEditingEnd?.(text.current)}
 					onChange={(e) => {
 						e.target.value.length > 0
 							? setHidePlaceholder(true)
 							: setHidePlaceholder(false)
-						
 						text.current = e.target.value
-
-						console.log(text.current);
 					}}
 					className={`flex-1 relative z-20 text-xs outline-none ${
 						props.completed ? 'line-through text-text-2' : ''

@@ -2,9 +2,11 @@ import { Menu } from '@headlessui/react'
 import {
 	ArrowLeftIcon,
 	DotsHorizontalIcon,
+	EmojiHappyIcon,
 	PlusIcon,
 } from '@heroicons/react/outline'
-import { FC, useRef, useState } from 'react'
+import { PhotographIcon } from '@heroicons/react/solid'
+import { FC, useEffect, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
 import { Todo } from '.'
 import Page from '../components/layout/Page'
@@ -128,25 +130,33 @@ const AddBlockButton: FC<AddBlockButtonProps> = (props) => {
 	return (
 		<div className='relative'>
 			<Menu>
-				<Menu.Button className='flex items-center w-full gap-2 py-2 outline-none opacity-50 hover:opacity-100'>
-					<PlusIcon className='w-4 h-4' />
-					<span className='self-start flex-1 text-sm font-bold text-left'>
-						Add New
-					</span>
-					<DotsHorizontalIcon className='w-4 h-4' />
-				</Menu.Button>
-				<MenuItems>
-					{noteBlocks.map((block, idx) => (
-						<Menu.Item key={idx}>
-							<button
-								onClick={() => props.onAdd && props.onAdd(block.type)}
-								className='flex items-center pl-2 text-sm h-9'
-							>
-								{block.label}
-							</button>
-						</Menu.Item>
-					))}
-				</MenuItems>
+				{({ open }) => (
+					<>
+						<Menu.Button
+							className={`flex items-center w-full gap-2 px-2 py-2 outline-none text-text-2 hover:bg-bg-2 ${
+								open ? 'bg-bg-2' : ''
+							}`}
+						>
+							<PlusIcon className='w-4 h-4' />
+							<span className='self-start flex-1 text-sm font-bold text-left'>
+								Add New
+							</span>
+							{/* <DotsHorizontalIcon className='w-4 h-4' /> */}
+						</Menu.Button>
+						<MenuItems>
+							{noteBlocks.map((block, idx) => (
+								<Menu.Item key={idx}>
+									<button
+										onClick={() => props.onAdd && props.onAdd(block.type)}
+										className='flex items-center pl-2 text-sm h-9'
+									>
+										{block.label}
+									</button>
+								</Menu.Item>
+							))}
+						</MenuItems>
+					</>
+				)}
 			</Menu>
 		</div>
 	)
@@ -180,6 +190,7 @@ const createBlock = (type: BlockTypes): NoteBlock => {
 interface NoteTodosProps {
 	todos: Todo[]
 	onAddTodo: () => void
+	onDeleteTodo: (id: string) => void
 }
 
 const NoteTodos: FC<NoteTodosProps> = (props) => {
@@ -191,11 +202,33 @@ const NoteTodos: FC<NoteTodosProps> = (props) => {
 					key={t.id}
 					text={t.text}
 					completed={t.completed}
+					onBackspaceWhenEmpty={() => {
+						console.log('delete todo')
+						props.onDeleteTodo(t.id)
+					}}
 				/>
 			))}
-			<button onClick={props.onAddTodo} className='flex items-center text-xs opacity-50 h-7 hover:opacity-80'>
+			<button
+				onClick={props.onAddTodo}
+				className='flex items-center text-xs opacity-50 h-7 hover:opacity-80'
+			>
 				<PlusIcon className='w-4 h-4 mr-2' />
 				New Todo
+			</button>
+		</div>
+	)
+}
+
+const NewNoteToolbar = () => {
+	return (
+		<div className='flex px-2 opacity-0 hover:opacity-100'>
+			<button className='flex items-center h-8 gap-2 px-2 rounded-md text-text-2 hover:bg-bg-2'>
+				<EmojiHappyIcon className='w-4 h-4' />
+				<span className='text-xs'>Add Emoji</span>
+			</button>
+			<button className='flex items-center h-8 gap-2 px-2 rounded-md text-text-2 hover:bg-bg-2'>
+				<PhotographIcon className='w-4 h-4' />
+				<span className='text-xs'>Add Cover</span>
 			</button>
 		</div>
 	)
@@ -208,7 +241,8 @@ export default function NewNote() {
 	return (
 		<Page>
 			<NewNoteHeader />
-			<div className='flex flex-col flex-1 gap-2 px-4 pt-4'>
+			<NewNoteToolbar />
+			<div className='flex flex-col flex-1 gap-2 px-4 pt-2'>
 				<NoteTitleEditable />
 				{blocks.map((block, idx) => {
 					if (block.type === 'text') {
@@ -225,6 +259,18 @@ export default function NewNote() {
 					if (block.type === 'todos') {
 						return (
 							<NoteTodos
+								onDeleteTodo={(id) => {
+									setBlocks(
+										blocks.map((b) =>
+											b.id === block.id
+												? {
+														...block,
+														todos: [...block.todos.filter((t) => t.id !== id)],
+												  }
+												: b
+										)
+									)
+								}}
 								onAddTodo={() => {
 									setBlocks(
 										blocks.map((b) =>

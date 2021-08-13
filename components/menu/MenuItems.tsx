@@ -9,7 +9,7 @@ const MenuItems: FC = (props) => {
 			leaveFrom='opacity-100'
 			leaveTo='opacity-0'
 		>
-			<Menu.Items className='absolute right-0 z-30 mt-1 border rounded-md shadow-lg border-border-1 top-4 w-44 bg-bg-2'>
+			<Menu.Items className='absolute right-0 z-30 mt-5 border rounded-md shadow-lg border-border-1 top-4 w-44 bg-bg-2'>
 				<div className='flex flex-col'>{props.children}</div>
 			</Menu.Items>
 		</Transition>
