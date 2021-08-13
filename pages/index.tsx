@@ -3,8 +3,8 @@ import FolderList from '../components/folders/FolderList'
 import HomeHeader from '../components/home/HomeHeader'
 import HomeNavigation from '../components/home/HomeNavigation'
 import { Tab } from '@headlessui/react'
-import NoteList from '../components/notes/NoteList'
 import Page from '../components/layout/Page'
+import NoteList from '../lib/Notes/NoteList'
 export interface Todo {
 	id: string
 	completed: boolean

@@ -1,17 +1,18 @@
 import { FC, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
-import { Checkbox } from '../checkbox'
+import { Checkbox } from '../../../components/checkbox'
 
-interface NoteBoxTodoItemProps {
+interface NoteTodoItemEditableProps {
 	completed?: boolean
 	text?: string
 	editing?: boolean
 	onEditingEnd?: (text: string) => void
 	onEnter?: () => void
 	onBackspaceWhenEmpty?: () => void
+	onChecked?: () => void
 }
 
-const NoteBoxTodoItem: FC<NoteBoxTodoItemProps> = (props) => {
+const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
 	const text = useRef<string>(props.text ?? '')
 
 	const [hidePlaceholder, setHidePlaceholder] = useState(
@@ -20,7 +21,7 @@ const NoteBoxTodoItem: FC<NoteBoxTodoItemProps> = (props) => {
 
 	return (
 		<div className='flex gap-2'>
-			<Checkbox checked={props.completed} />
+			<Checkbox onClick={props.onChecked} checked={props.completed} />
 			<div className='relative flex-1'>
 				{!hidePlaceholder ? (
 					<p className='absolute top-0 left-0 z-0 text-xs text-text-2 opacity-60'>
@@ -36,7 +37,9 @@ const NoteBoxTodoItem: FC<NoteBoxTodoItemProps> = (props) => {
 						if (e.code === 'Backspace' && text.current.length === 0)
 							props.onBackspaceWhenEmpty?.()
 					}}
-					onBlur={() => props.onEditingEnd?.(text.current)}
+					onBlur={() =>
+						props.text !== text.current && props.onEditingEnd?.(text.current)
+					}
 					onChange={(e) => {
 						e.target.value.length > 0
 							? setHidePlaceholder(true)
@@ -52,4 +55,4 @@ const NoteBoxTodoItem: FC<NoteBoxTodoItemProps> = (props) => {
 	)
 }
 
-export default NoteBoxTodoItem
+export default NoteTodoItemEditable

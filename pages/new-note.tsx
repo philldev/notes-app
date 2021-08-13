@@ -1,11 +1,11 @@
 import React from 'react'
 import Page from '../components/layout/Page'
-import NewNote from '../components/notes/new-note/NewNote'
+import NoteEditor from '../lib/Notes/NoteEditor/NoteEditor'
 
 export default function NewNotePage() {
 	return (
 		<Page>
-			<NewNote />
+			<NoteEditor />
 		</Page>
 	)
 }

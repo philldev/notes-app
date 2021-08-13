@@ -1,6 +1,6 @@
 import { ArrowLeftIcon } from '@heroicons/react/outline'
 
-const NewNoteHeader = () => {
+const NoteEditorHeader = () => {
 	return (
 		<div className='flex justify-between px-4 mb-2'>
 			<div className='flex gap-4'>
@@ -16,4 +16,4 @@ const NewNoteHeader = () => {
 	)
 }
 
-export default NewNoteHeader
+export default NoteEditorHeader

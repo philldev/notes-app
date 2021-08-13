@@ -1,12 +1,11 @@
-import { FC, useRef, useState } from "react"
-import ContentEditable from "react-contenteditable"
+import { FC, useRef, useState } from 'react'
+import ContentEditable from 'react-contenteditable'
 
 interface NoteTitleEditableProps {
-	title? : string
+	title?: string
 }
 
-const NoteTitleEditable : FC<NoteTitleEditableProps> = (props) => {
-
+const NoteTitleEditable: FC<NoteTitleEditableProps> = (props) => {
 	const html = useRef(props.title ?? '')
 
 	const [hidePlaceholder, setHidePlaceholder] = useState(
@@ -23,7 +22,12 @@ const NoteTitleEditable : FC<NoteTitleEditableProps> = (props) => {
 			<ContentEditable
 				html={html.current}
 				className='relative z-10 text-lg font-bold outline-none'
-				onChange={(e) => html.current = e.target.value}
+				onChange={(e) => {
+					e.target.value.length > 0
+						? setHidePlaceholder(true)
+						: setHidePlaceholder(false)
+					html.current = e.target.value
+				}}
 				placeholder='Take a note'
 			/>
 		</div>
