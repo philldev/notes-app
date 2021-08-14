@@ -11,8 +11,7 @@ interface NoteTodosEditableProps {
 }
 
 const NoteTodosEditable: FC<NoteTodosEditableProps> = (props) => {
-
-	const todos = useMemo(() => props.todos , [props.todos])
+	const todos = useMemo(() => props.todos, [props.todos])
 
 	console.log('render todos')
 
@@ -41,6 +40,7 @@ const NoteTodosEditable: FC<NoteTodosEditableProps> = (props) => {
 					onBackspaceWhenEmpty={() => {
 						props.onDeleteTodo(t)
 					}}
+					onDeleteClick={() => props.onDeleteTodo(t)}
 				/>
 			))}
 			{props.todos[props.todos.length - 1]?.text !== '' && (

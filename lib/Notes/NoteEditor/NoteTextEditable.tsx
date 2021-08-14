@@ -40,21 +40,12 @@ const NoteTextEditable: FC<NoteTextEditableProps> = (props) => {
 				}}
 				placeholder='Take a note'
 			/>
-			<Menu>
-				<Menu.Button className='absolute right-0 z-20 opacity-0 top-2 group-hover:opacity-80'>
-					<DotsHorizontalIcon className='w-4 h-4 ' />
-				</Menu.Button>
-				<MenuItems>
-					<Menu.Item>
-						<button
-							onClick={() => props.onDeleteClick && props.onDeleteClick()}
-							className='flex items-center pl-2 text-sm h-9'
-						>
-							Delete
-						</button>
-					</Menu.Item>
-				</MenuItems>
-			</Menu>
+			<button
+				onClick={props.onDeleteClick}
+				className='absolute right-0 z-20 p-1 text-xs text-opacity-75 transition-all rounded-md opacity-0 cursor-pointer group-hover:opacity-100 -top-1 text-accent-danger bg-bg-2'
+			>
+				Delete
+			</button>
 		</div>
 	)
 }

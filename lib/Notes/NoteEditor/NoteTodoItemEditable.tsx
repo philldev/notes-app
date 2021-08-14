@@ -10,7 +10,8 @@ interface NoteTodoItemEditableProps {
 	onEnter?: () => void
 	onBackspaceWhenEmpty?: () => void
 	onChecked?: () => void
-	onTextChange : (text : string) => void
+	onTextChange?: (text: string) => void
+	onDeleteClick?: () => void
 }
 
 const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
@@ -21,9 +22,9 @@ const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
 	)
 
 	return (
-		<div className='flex gap-2'>
+		<div className='flex items-center gap-2'>
 			<Checkbox onClick={props.onChecked} checked={props.completed} />
-			<div className='relative flex-1'>
+			<div className='relative flex-1 group'>
 				{!hidePlaceholder ? (
 					<p className='absolute top-0 left-0 z-0 text-xs text-text-2 opacity-60'>
 						Walk the dog
@@ -46,12 +47,15 @@ const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
 							? setHidePlaceholder(true)
 							: setHidePlaceholder(false)
 						text.current = e.target.value
-						props.onTextChange(text.current)
+						props.onTextChange?.(text.current)
 					}}
 					className={`flex-1 relative z-20 text-xs outline-none ${
 						props.completed ? 'line-through text-text-2' : ''
 					}`}
 				/>
+				<button onClick={props.onDeleteClick} className='absolute right-0 z-20 p-1 text-xs text-opacity-75 transition-all rounded-md opacity-0 cursor-pointer group-hover:opacity-100 -top-1 text-accent-danger bg-bg-2'>
+					Delete
+				</button>
 			</div>
 		</div>
 	)
