@@ -184,7 +184,7 @@ const NoteEditor = () => {
 					<span className='text-xs'>Add Cover</span>
 				</button>
 			</div>
-			<div className='flex flex-col flex-1 gap-3 px-4 pt-2'>
+			<div className='flex flex-col flex-1 gap-4 px-4 pt-2'>
 				<NoteTitleEditable
 					title={title}
 					onUpdate={(titleText) => {
