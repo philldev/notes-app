@@ -1,8 +1,9 @@
-import { FC } from 'react'
+import { FC, useRef } from 'react'
 import NoteTextEditable from './NoteTextEditable'
 import NoteTodosEditable from './NoteTodosEditable'
 import { NoteBlock, TextBlock, TodoBlock } from '../types'
 import { Todo } from '../../../pages'
+import ContentEditable from 'react-contenteditable'
 
 interface NoteBlocksEditableProps {
 	blocks: NoteBlock[]
@@ -14,6 +15,7 @@ interface NoteBlocksEditableProps {
 }
 
 const NoteBlocksEditable: FC<NoteBlocksEditableProps> = (props) => {
+	const ref = useRef<ContentEditable>() 
 	return (
 		<>
 			{props.blocks.map((block, idx) => {

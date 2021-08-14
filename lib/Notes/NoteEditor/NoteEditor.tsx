@@ -12,6 +12,7 @@ import NoteDescEditable from './NoteDescEditable'
 
 const NoteEditor = () => {
 	const [title, setTitle] = useState('')
+	const [coverUrl, setCoverUrl] = useState<string | null>(null)
 	const [description, setDescription] = useState('')
 	const [showDescription, setShowDescription] = useState(false)
 	const [blocks, setBlocks] = useState<NoteBlock[]>([
@@ -146,29 +147,28 @@ const NoteEditor = () => {
 		updateTodoBlockItem(updatedTodo, todoBlock)
 	}
 
-
 	return (
 		<div className='flex flex-col flex-1'>
 			<NoteEditorHeader />
-			<div>
-				<div className='relative w-full h-40 mb-3'>
-					<Image
-						className=''
-						layout='fill'
-						objectFit='cover'
-						src={
-							'https://images.unsplash.com/photo-1628847022112-822475a94a78?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-						}
-						alt='photo header'
-					/>
-					<div className='absolute bottom-1 right-1'>
-						<button className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2 hover:bg-opacity-70'>
-							<ChatAltIcon className='w-4 h-4' />
-							<span className='text-xs'>Change cover</span>
-						</button>
+			{coverUrl && (
+				<div>
+					<div className='relative w-full h-40 mb-3'>
+						<Image
+							className=''
+							layout='fill'
+							objectFit='cover'
+							src={coverUrl}
+							alt='photo header'
+						/>
+						<div className='absolute bottom-1 right-1'>
+							<button className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2 hover:bg-opacity-70'>
+								<ChatAltIcon className='w-4 h-4' />
+								<span className='text-xs'>Change cover</span>
+							</button>
+						</div>
 					</div>
 				</div>
-			</div>
+			)}
 			<div className='relative flex px-2 transition-all opacity-20 hover:opacity-100'>
 				{!showDescription && (
 					<button
@@ -179,10 +179,19 @@ const NoteEditor = () => {
 						<span className='text-xs'>Add Description</span>
 					</button>
 				)}
-				<button className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2'>
-					<PhotographIcon className='w-4 h-4' />
-					<span className='text-xs'>Add Cover</span>
-				</button>
+				{!coverUrl && (
+					<button
+						onClick={() =>
+							setCoverUrl(
+								'https://images.unsplash.com/photo-1628847022112-822475a94a78?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+							)
+						}
+						className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2'
+					>
+						<PhotographIcon className='w-4 h-4' />
+						<span className='text-xs'>Add Cover</span>
+					</button>
+				)}
 			</div>
 			<div className='flex flex-col flex-1 gap-4 px-4 pt-2'>
 				<NoteTitleEditable

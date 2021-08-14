@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react'
+import { FC, RefObject, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
 
 interface NoteTextEditableProps {
