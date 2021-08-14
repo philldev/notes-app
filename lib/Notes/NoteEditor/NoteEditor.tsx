@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddBlockButton from './AddBlockButton'
 import NoteBlocksEditable from './NoteBlocksEditable'
 import NoteTitleEditable from './NoteTitleEditable'
@@ -9,6 +9,8 @@ import { Todo } from '../../../pages'
 import { v4 } from 'uuid'
 
 const NoteEditor = () => {
+	const [title, setTitle] = useState('')
+
 	const [blocks, setBlocks] = useState<NoteBlock[]>([
 		{ type: 'text', id: Date.now().toString(), text: '' },
 	])
@@ -48,10 +50,10 @@ const NoteEditor = () => {
 	const deleteTodoBlockItem = (todoBlock: TodoBlock, todo: Todo) => {
 		setBlocks((p) => {
 			return p.map((b) =>
-				b.id === todoBlock.id
+				b.id === todoBlock.id && b.type === 'todos'
 					? {
-							...todoBlock,
-							todos: todoBlock.todos.filter((t) => t.id !== todo.id),
+							...b,
+							todos: b.todos.filter((t) => t.id !== todo.id),
 					  }
 					: b
 			)
@@ -99,6 +101,12 @@ const NoteEditor = () => {
 		})
 	}
 
+	const updateTextBlock = (updatedTextBlock: TextBlock) => {
+		setBlocks((p) => {
+			return p.map((b) => (b.id === updatedTextBlock.id ? updatedTextBlock : b))
+		})
+	}
+
 	const handleBlockAdd = (type: BlockTypes) => {
 		switch (type) {
 			case 'text':
@@ -115,6 +123,11 @@ const NoteEditor = () => {
 	const handleTextBlockDelete = (textBlock: TextBlock) => {
 		deleteBlock(textBlock.id)
 	}
+
+	const handleTextBlockUpdate = (textBlock: TextBlock) => {
+		updateTextBlock(textBlock)
+	}
+
 	const handleTodoItemDelete = (todo: Todo, todoBlock: TodoBlock) => {
 		if (todoBlock.todos.length === 1) {
 			deleteBlock(todoBlock.id)
@@ -130,13 +143,22 @@ const NoteEditor = () => {
 		updateTodoBlockItem(updatedTodo, todoBlock)
 	}
 
+
+	console.log('render')
+
 	return (
 		<div className='flex flex-col flex-1'>
 			<NoteEditorHeader />
 			<NoteEditorToolbar />
 			<div className='flex flex-col flex-1 gap-2 px-4 pt-2'>
-				<NoteTitleEditable />
+				<NoteTitleEditable
+					title={title}
+					onUpdate={(titleText) => {
+						setTitle(titleText)
+					}}
+				/>
 				<NoteBlocksEditable
+					onTextBlockUpdate={handleTextBlockUpdate}
 					onTextBlockDelete={handleTextBlockDelete}
 					onTodoItemDelete={handleTodoItemDelete}
 					onTodoItemAdd={handleTodoItemAdd}

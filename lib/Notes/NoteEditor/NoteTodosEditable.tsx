@@ -1,5 +1,5 @@
 import { PlusIcon } from '@heroicons/react/outline'
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { Todo } from '../../../pages'
 import NoteTodoItemEditable from './NoteTodoItemEditable'
 
@@ -11,24 +11,26 @@ interface NoteTodosEditableProps {
 }
 
 const NoteTodosEditable: FC<NoteTodosEditableProps> = (props) => {
+
+	const todos = useMemo(() => props.todos , [props.todos])
+
+	console.log('render todos')
+
 	return (
 		<div className='flex flex-col gap-2'>
-			{props.todos.map((t) => (
+			{todos.map((t) => (
 				<NoteTodoItemEditable
 					editing
 					key={t.id}
 					text={t.text}
 					completed={t.completed}
 					onChecked={() => {
-						// props.onUpdateTodo({
-						// 	...t,
-						// 	completed: !t.completed,	
-						// })
+						props.onUpdateTodo({
+							...t,
+							completed: !t.completed,
+						})
 					}}
-					onEditingEnd={(text) => {
-						console.log('object');
-						//TODO: UPDATE THIS
-						console.log(text);
+					onTextChange={(text) => {
 						if (text !== '') {
 							props.onUpdateTodo({
 								...t,
@@ -41,7 +43,7 @@ const NoteTodosEditable: FC<NoteTodosEditableProps> = (props) => {
 					}}
 				/>
 			))}
-			{props.todos[props.todos.length - 1].text !== '' && (
+			{props.todos[props.todos.length - 1]?.text !== '' && (
 				<button
 					onClick={props.onAddTodo}
 					className='flex items-center text-xs opacity-50 h-7 hover:opacity-80'

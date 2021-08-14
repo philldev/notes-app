@@ -1,13 +1,14 @@
-import { Menu } from "@headlessui/react"
-import { DotsHorizontalIcon } from "@heroicons/react/outline"
-import { FC, useRef, useState } from "react"
-import ContentEditable from "react-contenteditable"
-import MenuItems from "../../../components/menu/MenuItems"
+import { Menu } from '@headlessui/react'
+import { DotsHorizontalIcon } from '@heroicons/react/outline'
+import { FC, useRef, useState } from 'react'
+import ContentEditable from 'react-contenteditable'
+import MenuItems from '../../../components/menu/MenuItems'
 
 interface NoteTextEditableProps {
 	text?: string
 	onDeleteClick?: () => void
 	onBackspaceWhenEmpty: () => void
+	onTextChange: (text: string) => void
 }
 
 const NoteTextEditable: FC<NoteTextEditableProps> = (props) => {
@@ -35,6 +36,7 @@ const NoteTextEditable: FC<NoteTextEditableProps> = (props) => {
 						? setHidePlaceholder(true)
 						: setHidePlaceholder(false)
 					html.current = e.target.value
+					props.onTextChange(html.current)
 				}}
 				placeholder='Take a note'
 			/>

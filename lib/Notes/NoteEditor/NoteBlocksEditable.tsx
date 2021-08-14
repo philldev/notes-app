@@ -7,6 +7,7 @@ import { Todo } from '../../../pages'
 interface NoteBlocksEditableProps {
 	blocks: NoteBlock[]
 	onTextBlockDelete: (textBlock: TextBlock) => void
+	onTextBlockUpdate: (textBlock: TextBlock) => void
 	onTodoItemDelete: (todo: Todo, todoBlock: TodoBlock) => void
 	onTodoItemAdd: (todoBlock: TodoBlock) => void
 	onTodoItemUpdate: (updatedTodo: Todo, todoBlock: TodoBlock) => void
@@ -20,6 +21,9 @@ const NoteBlocksEditable: FC<NoteBlocksEditableProps> = (props) => {
 					return (
 						<NoteTextEditable
 							text={block.text}
+							onTextChange={(text) => {
+								props.onTextBlockUpdate({ ...block, text })
+							}}
 							onBackspaceWhenEmpty={() => {
 								props.onTextBlockDelete(block)
 							}}

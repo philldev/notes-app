@@ -3,6 +3,7 @@ import ContentEditable from 'react-contenteditable'
 
 interface NoteTitleEditableProps {
 	title?: string
+	onUpdate: (title: string) => void
 }
 
 const NoteTitleEditable: FC<NoteTitleEditableProps> = (props) => {
@@ -27,6 +28,7 @@ const NoteTitleEditable: FC<NoteTitleEditableProps> = (props) => {
 						? setHidePlaceholder(true)
 						: setHidePlaceholder(false)
 					html.current = e.target.value
+					props.onUpdate(html.current)
 				}}
 				placeholder='Take a note'
 			/>

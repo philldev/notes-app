@@ -10,6 +10,7 @@ interface NoteTodoItemEditableProps {
 	onEnter?: () => void
 	onBackspaceWhenEmpty?: () => void
 	onChecked?: () => void
+	onTextChange : (text : string) => void
 }
 
 const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
@@ -45,6 +46,7 @@ const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
 							? setHidePlaceholder(true)
 							: setHidePlaceholder(false)
 						text.current = e.target.value
+						props.onTextChange(text.current)
 					}}
 					className={`flex-1 relative z-20 text-xs outline-none ${
 						props.completed ? 'line-through text-text-2' : ''
