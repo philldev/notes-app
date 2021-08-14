@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react'
+import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
 import { Checkbox } from '../../../components/checkbox'
 
@@ -12,6 +12,9 @@ interface NoteTodoItemEditableProps {
 	onChecked?: () => void
 	onTextChange?: (text: string) => void
 	onDeleteClick?: () => void
+	focused?: boolean
+	changeFocus?: (index: number) => void
+	index: number
 }
 
 const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
@@ -20,6 +23,23 @@ const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
 	const [hidePlaceholder, setHidePlaceholder] = useState(
 		text.current.length > 0
 	)
+	const ref = useRef<HTMLElement | null>(null)
+
+	console.log(props.index)
+
+	useEffect(() => {
+		if (props.focused) {
+			// Move element into view when it is focused
+			ref.current?.focus()
+		}
+	}, [props.focused])
+
+	const { index, changeFocus } = props
+
+	const handleSelect = useCallback(() => {
+		console.log(index)
+		changeFocus?.(index)
+	}, [index, changeFocus])
 
 	return (
 		<div className='flex items-center gap-2'>
@@ -28,13 +48,17 @@ const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
 				{!hidePlaceholder ? (
 					<p className='absolute top-0 left-0 z-0 text-xs text-text-2 opacity-60'>
 						Walk the dog
+						{props.index}
 					</p>
 				) : null}
 				<ContentEditable
+					innerRef={ref}
 					tagName='div'
 					disabled={!props.editing}
 					html={text.current}
+					onClick={handleSelect}
 					onKeyUp={(e) => {
+						handleSelect()
 						if (e.code === 'Enter') props.onEnter?.()
 						if (e.code === 'Backspace' && text.current.length === 0)
 							props.onBackspaceWhenEmpty?.()
@@ -53,7 +77,10 @@ const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
 						props.completed ? 'line-through text-text-2' : ''
 					}`}
 				/>
-				<button onClick={props.onDeleteClick} className='absolute right-0 z-20 p-1 text-xs text-opacity-75 transition-all rounded-md opacity-0 cursor-pointer group-hover:opacity-100 -top-1 text-accent-danger bg-bg-2'>
+				<button
+					onClick={props.onDeleteClick}
+					className='absolute right-0 z-20 p-1 text-xs text-opacity-75 transition-all rounded-md opacity-0 cursor-pointer group-hover:opacity-100 -top-1 text-accent-danger bg-bg-2'
+				>
 					Delete
 				</button>
 			</div>

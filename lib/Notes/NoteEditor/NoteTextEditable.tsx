@@ -1,7 +1,10 @@
-import { FC, RefObject, useRef, useState } from 'react'
+import { FC, RefObject, useCallback, useEffect, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
 
 interface NoteTextEditableProps {
+	focused?: boolean
+	changeFocus?: (index: number) => void
+	index: number
 	text?: string
 	onDeleteClick?: () => void
 	onBackspaceWhenEmpty: () => void
@@ -15,6 +18,19 @@ const NoteTextEditable: FC<NoteTextEditableProps> = (props) => {
 		html.current.length > 0
 	)
 
+	const ref = useRef<HTMLElement | null>(null)
+
+	useEffect(() => {
+		if (props.focused) {
+			// Move element into view when it is focused
+			ref.current?.focus()
+		}
+	}, [props.focused])
+
+	const handleSelect = useCallback(() => {
+		props.changeFocus?.(props.index)
+	}, [props])
+
 	return (
 		<div className='relative group'>
 			{!hidePlaceholder ? (
@@ -23,9 +39,12 @@ const NoteTextEditable: FC<NoteTextEditableProps> = (props) => {
 				</p>
 			) : null}
 			<ContentEditable
+				innerRef={ref}
 				html={html.current}
 				className='relative z-10 outline-none'
+				onClick={handleSelect}
 				onKeyUp={(e) => {
+					handleSelect()
 					if (e.code === 'Backspace' && html.current.length === 0) {
 						props.onBackspaceWhenEmpty?.()
 					}

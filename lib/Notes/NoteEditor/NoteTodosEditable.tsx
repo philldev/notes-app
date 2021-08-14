@@ -4,6 +4,10 @@ import { Todo } from '../../../pages'
 import NoteTodoItemEditable from './NoteTodoItemEditable'
 
 interface NoteTodosEditableProps {
+	index: number
+	focused?: boolean
+	currentFocus: number | null
+	changeFocus?: (index: number) => void
 	todos: Todo[]
 	onAddTodo: () => void
 	onDeleteTodo: (todo: Todo) => void
@@ -15,8 +19,11 @@ const NoteTodosEditable: FC<NoteTodosEditableProps> = (props) => {
 
 	return (
 		<div className='flex flex-col gap-2'>
-			{todos.map((t) => (
+			{todos.map((t, idx) => (
 				<NoteTodoItemEditable
+					changeFocus={props.changeFocus}
+					focused={props.index + idx === props.currentFocus}
+					index={props.index + idx}
 					editing
 					key={t.id}
 					text={t.text}
@@ -37,6 +44,7 @@ const NoteTodosEditable: FC<NoteTodosEditableProps> = (props) => {
 					}}
 					onBackspaceWhenEmpty={() => {
 						props.onDeleteTodo(t)
+						props.changeFocus?.(props.index + idx - 1)
 					}}
 					onDeleteClick={() => props.onDeleteTodo(t)}
 				/>

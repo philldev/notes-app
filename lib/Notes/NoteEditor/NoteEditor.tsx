@@ -172,6 +172,7 @@ const NoteEditor = () => {
 			<div className='relative flex px-2 transition-all opacity-20 hover:opacity-100'>
 				{!showDescription && (
 					<button
+					tabIndex={1}
 						onClick={() => setShowDescription(true)}
 						className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2'
 					>
@@ -181,6 +182,7 @@ const NoteEditor = () => {
 				)}
 				{!coverUrl && (
 					<button
+					tabIndex={2}
 						onClick={() =>
 							setCoverUrl(
 								'https://images.unsplash.com/photo-1628847022112-822475a94a78?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
