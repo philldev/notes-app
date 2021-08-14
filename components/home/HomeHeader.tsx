@@ -2,7 +2,7 @@ import { DotsCircleHorizontalIcon, SearchIcon } from '@heroicons/react/outline'
 
 const HomeHeader = () => {
 	return (
-		<div className='flex justify-between px-4 mb-2'>
+		<div className='flex items-center justify-between px-4 h-14'>
 			<h3 className='text-xl font-bold'>Notes</h3>
 			<div className='flex items-center gap-3'>
 				<button className='text-text-2'>Edit</button>
