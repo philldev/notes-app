@@ -37,7 +37,6 @@ const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
 	const { index, changeFocus } = props
 
 	const handleSelect = useCallback(() => {
-		console.log(index)
 		changeFocus?.(index)
 	}, [index, changeFocus])
 
@@ -48,7 +47,6 @@ const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
 				{!hidePlaceholder ? (
 					<p className='absolute top-0 left-0 z-0 text-xs text-text-2 opacity-60'>
 						Walk the dog
-						{props.index}
 					</p>
 				) : null}
 				<ContentEditable
