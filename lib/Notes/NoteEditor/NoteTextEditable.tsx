@@ -26,7 +26,9 @@ const NoteTextEditable: FC<NoteTextEditableProps> = (props) => {
 				html={html.current}
 				className='relative z-10 outline-none'
 				onKeyUp={(e) => {
-					if (e.code === 'Backspace') props.onBackspaceWhenEmpty?.()
+					if (e.code === 'Backspace' && html.current.length === 0) {
+						props.onBackspaceWhenEmpty?.()
+					}
 				}}
 				onChange={(e) => {
 					e.target.value.length > 0

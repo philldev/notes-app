@@ -2,7 +2,7 @@ import { ArrowLeftIcon } from '@heroicons/react/outline'
 
 const NoteEditorHeader = () => {
 	return (
-		<div className='flex justify-between px-4 mb-2'>
+		<div className='flex items-center justify-between px-4 h-14'>
 			<div className='flex gap-4'>
 				<button>
 					<ArrowLeftIcon className='w-4 h-4 text-text-2' />

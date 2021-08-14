@@ -13,8 +13,6 @@ interface NoteTodosEditableProps {
 const NoteTodosEditable: FC<NoteTodosEditableProps> = (props) => {
 	const todos = useMemo(() => props.todos, [props.todos])
 
-	console.log('render todos')
-
 	return (
 		<div className='flex flex-col gap-2'>
 			{todos.map((t) => (

@@ -8,10 +8,12 @@ import NoteBlocksEditable from './NoteBlocksEditable'
 import NoteEditorHeader from './NoteEditorHeader'
 import NoteTitleEditable from './NoteTitleEditable'
 import Image from 'next/image'
+import NoteDescEditable from './NoteDescEditable'
 
 const NoteEditor = () => {
 	const [title, setTitle] = useState('')
-
+	const [description, setDescription] = useState('')
+	const [showDescription, setShowDescription] = useState(false)
 	const [blocks, setBlocks] = useState<NoteBlock[]>([
 		{ type: 'text', id: Date.now().toString(), text: '' },
 	])
@@ -144,7 +146,6 @@ const NoteEditor = () => {
 		updateTodoBlockItem(updatedTodo, todoBlock)
 	}
 
-	console.log('render')
 
 	return (
 		<div className='flex flex-col flex-1'>
@@ -169,10 +170,15 @@ const NoteEditor = () => {
 				</div>
 			</div>
 			<div className='relative flex px-2 transition-all opacity-20 hover:opacity-100'>
-				<button className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2'>
-					<ChatAltIcon className='w-4 h-4' />
-					<span className='text-xs'>Add Description</span>
-				</button>
+				{!showDescription && (
+					<button
+						onClick={() => setShowDescription(true)}
+						className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2'
+					>
+						<ChatAltIcon className='w-4 h-4' />
+						<span className='text-xs'>Add Description</span>
+					</button>
+				)}
 				<button className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2'>
 					<PhotographIcon className='w-4 h-4' />
 					<span className='text-xs'>Add Cover</span>
@@ -185,6 +191,17 @@ const NoteEditor = () => {
 						setTitle(titleText)
 					}}
 				/>
+				{showDescription && (
+					<NoteDescEditable
+						description={description}
+						onBackspaceWhenEmpty={() => {
+							setShowDescription(false)
+						}}
+						onUpdate={(descriptionText) => {
+							setDescription(descriptionText)
+						}}
+					/>
+				)}
 				<NoteBlocksEditable
 					onTextBlockUpdate={handleTextBlockUpdate}
 					onTextBlockDelete={handleTextBlockDelete}
