@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import { ChatAltIcon, PhotographIcon } from '@heroicons/react/outline'
+import React, { useState } from 'react'
+import { v4 } from 'uuid'
+import { Todo } from '../../../pages'
+import { BlockTypes, NoteBlock, TextBlock, TodoBlock } from '../types'
 import AddBlockButton from './AddBlockButton'
 import NoteBlocksEditable from './NoteBlocksEditable'
-import NoteTitleEditable from './NoteTitleEditable'
-import { BlockTypes, NoteBlock, TextBlock, TodoBlock } from '../types'
 import NoteEditorHeader from './NoteEditorHeader'
-import NoteEditorToolbar from './NoteEditorToolbar'
-import { Todo } from '../../../pages'
-import { v4 } from 'uuid'
+import NoteTitleEditable from './NoteTitleEditable'
+import Image from 'next/image'
 
 const NoteEditor = () => {
 	const [title, setTitle] = useState('')
@@ -143,14 +144,41 @@ const NoteEditor = () => {
 		updateTodoBlockItem(updatedTodo, todoBlock)
 	}
 
-
 	console.log('render')
 
 	return (
 		<div className='flex flex-col flex-1'>
 			<NoteEditorHeader />
-			<NoteEditorToolbar />
-			<div className='flex flex-col flex-1 gap-2 px-4 pt-2'>
+			<div>
+				<div className='relative w-full h-40 mb-3'>
+					<Image
+						className=''
+						layout='fill'
+						objectFit='cover'
+						src={
+							'https://images.unsplash.com/photo-1628847022112-822475a94a78?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+						}
+						alt='photo header'
+					/>
+					<div className='absolute bottom-1 right-1'>
+						<button className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2 hover:bg-opacity-70'>
+							<ChatAltIcon className='w-4 h-4' />
+							<span className='text-xs'>Change cover</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div className='relative flex px-2 transition-all opacity-20 hover:opacity-100'>
+				<button className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2'>
+					<ChatAltIcon className='w-4 h-4' />
+					<span className='text-xs'>Add Description</span>
+				</button>
+				<button className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2'>
+					<PhotographIcon className='w-4 h-4' />
+					<span className='text-xs'>Add Cover</span>
+				</button>
+			</div>
+			<div className='flex flex-col flex-1 gap-3 px-4 pt-2'>
 				<NoteTitleEditable
 					title={title}
 					onUpdate={(titleText) => {

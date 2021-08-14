@@ -1,8 +1,5 @@
-import { Menu } from '@headlessui/react'
-import { DotsHorizontalIcon } from '@heroicons/react/outline'
 import { FC, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
-import MenuItems from '../../../components/menu/MenuItems'
 
 interface NoteTextEditableProps {
 	text?: string
