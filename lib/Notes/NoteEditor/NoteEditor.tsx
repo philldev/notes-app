@@ -9,6 +9,12 @@ import NoteEditorHeader from './NoteEditorHeader'
 import NoteTitleEditable from './NoteTitleEditable'
 import Image from 'next/image'
 import NoteDescEditable from './NoteDescEditable'
+import { Popover, Tab } from '@headlessui/react'
+import PopoverTransition from '../../../components/transitions/PopoverTransition'
+import Buttons from '../../../pages/docs/buttons'
+import { Button } from '../../../components'
+import ImageUpload from './Components/ImageUpload'
+import FromImageLink from './Components/ImageLink'
 
 const NoteEditor = () => {
 	const [title, setTitle] = useState('')
@@ -160,11 +166,63 @@ const NoteEditor = () => {
 							src={coverUrl}
 							alt='photo header'
 						/>
-						<div className='absolute bottom-1 right-1'>
-							<button className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2 hover:bg-opacity-70'>
-								<ChatAltIcon className='w-4 h-4' />
-								<span className='text-xs'>Change cover</span>
-							</button>
+						<div className='absolute bottom-0 right-0 pb-1 pr-1'>
+							<Popover>
+								<Popover.Button className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2 hover:bg-opacity-70'>
+									<ChatAltIcon className='w-4 h-4' />
+									<span className='text-xs'>Change cover</span>
+								</Popover.Button>
+								<PopoverTransition>
+									<Popover.Panel className='absolute right-0 z-50 w-screen max-w-sm p-1'>
+										{(props) => (
+											<div className='w-full border rounded-md bg-bg-1 border-border-1'>
+												<Tab.Group>
+													<Tab.List className='flex gap-2 px-1 py-1 border-b border-border-1'>
+														<Tab className='relative px-2 h-9'>
+															{({ selected }) => (
+																<>
+																	<span>Upload</span>
+																	{selected && (
+																		<div className='absolute bottom-0 left-0 right-0 h-1 bg-accent-primary' />
+																	)}
+																</>
+															)}
+														</Tab>
+														<Tab className='relative px-2 h-9'>
+															{({ selected }) => (
+																<>
+																	<span>From Image Link</span>
+																	{selected && (
+																		<div className='absolute bottom-0 left-0 right-0 h-1 bg-accent-primary' />
+																	)}
+																</>
+															)}
+														</Tab>
+													</Tab.List>
+													<Tab.Panels>
+														<Tab.Panel className='p-2'>
+															<ImageUpload
+																onChange={(file, url) => {
+																	console.log(file, url)
+																	props.close()
+																}}
+															/>
+														</Tab.Panel>
+														<Tab.Panel>
+															<FromImageLink
+																onSubmit={(url) => {
+																	console.log(url)
+																	props.close()
+																}}
+															/>
+														</Tab.Panel>
+													</Tab.Panels>
+												</Tab.Group>
+											</div>
+										)}
+									</Popover.Panel>
+								</PopoverTransition>
+							</Popover>
 						</div>
 					</div>
 				</div>
@@ -172,7 +230,7 @@ const NoteEditor = () => {
 			<div className='relative flex px-2 transition-all opacity-20 hover:opacity-100'>
 				{!showDescription && (
 					<button
-					tabIndex={1}
+						tabIndex={1}
 						onClick={() => setShowDescription(true)}
 						className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2'
 					>
@@ -182,7 +240,7 @@ const NoteEditor = () => {
 				)}
 				{!coverUrl && (
 					<button
-					tabIndex={2}
+						tabIndex={2}
 						onClick={() =>
 							setCoverUrl(
 								'https://images.unsplash.com/photo-1628847022112-822475a94a78?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
