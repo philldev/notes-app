@@ -31,10 +31,6 @@ const NoteEditorBlocks: FC<NoteBlocksEditableProps> = (props) => {
 		<>
 			{props.blocks.map((block, idx) => {
 				if (block.type === 'text') {
-					// let index =
-					// 	props.blocks[idx - 1]?.type === 'todos'
-					// 		? (props.blocks[idx - 1] as TodoBlock).todos.length + idx
-					// 		: idx
 					return (
 						<NoteTextEditable
 							index={idx}

@@ -5,10 +5,10 @@ const NoteEditorBlock = () => {
 	return (
 		<>
 			<NoteEditorBlocks
+				onTodoItemAdd={() => {}}
+				onTodoItemDelete={() => {}}
 				onTextBlockUpdate={() => {}}
 				onTextBlockDelete={() => {}}
-				onTodoItemDelete={() => {}}
-				onTodoItemAdd={() => {}}
 				onTodoItemUpdate={() => {}}
 				blocks={[]}
 			/>
