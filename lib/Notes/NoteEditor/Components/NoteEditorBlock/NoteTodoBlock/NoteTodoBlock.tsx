@@ -1,9 +1,9 @@
 import { PlusIcon } from '@heroicons/react/outline'
 import { FC, useMemo } from 'react'
-import { Todo } from '../../../pages'
+import { Todo } from '../../../../../../pages'
 import NoteTodoItemEditable from './NoteTodoItemEditable'
 
-interface NoteTodosEditableProps {
+interface NoteTodoBlocksProps {
 	index: number
 	focused?: boolean
 	currentFocus: number | null
@@ -14,7 +14,7 @@ interface NoteTodosEditableProps {
 	onUpdateTodo: (updatedTodo: Todo) => void
 }
 
-const NoteTodosEditable: FC<NoteTodosEditableProps> = (props) => {
+const NoteTodoBlock: FC<NoteTodoBlocksProps> = (props) => {
 	const todos = useMemo(() => props.todos, [props.todos])
 
 	return (
@@ -62,4 +62,4 @@ const NoteTodosEditable: FC<NoteTodosEditableProps> = (props) => {
 	)
 }
 
-export default NoteTodosEditable
+export default NoteTodoBlock

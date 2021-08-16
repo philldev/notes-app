@@ -1,10 +1,9 @@
-import { FC, useRef } from 'react'
-import NoteTextEditable from './NoteTextEditable'
-import NoteTodosEditable from './NoteTodosEditable'
-import { NoteBlock, TextBlock, TodoBlock } from '../types'
-import { Todo } from '../../../pages'
-import ContentEditable from 'react-contenteditable'
-import useRoveFocus from '../../../hooks/useRoveFocus'
+import { FC } from 'react'
+import useRoveFocus from '../../../../../hooks/useRoveFocus'
+import { Todo } from '../../../../../pages'
+import { NoteBlock, TextBlock, TodoBlock } from '../../../types'
+import NoteTextEditable from './NoteTextBlock/NoteTextEditable'
+import NoteTodoBlock from './NoteTodoBlock/NoteTodoBlock'
 
 interface NoteBlocksEditableProps {
 	blocks: NoteBlock[]
@@ -15,7 +14,7 @@ interface NoteBlocksEditableProps {
 	onTodoItemUpdate: (updatedTodo: Todo, todoBlock: TodoBlock) => void
 }
 
-const NoteBlocksEditable: FC<NoteBlocksEditableProps> = (props) => {
+const NoteEditorBlocks: FC<NoteBlocksEditableProps> = (props) => {
 	const focusLength = () => {
 		let length = 0
 		props.blocks.forEach((b) => {
@@ -25,11 +24,9 @@ const NoteBlocksEditable: FC<NoteBlocksEditableProps> = (props) => {
 				length = length + b.todos.length
 			}
 		})
-
 		return length
 	}
 	const { currentFocus, changeFocus } = useRoveFocus(focusLength())
-
 	return (
 		<>
 			{props.blocks.map((block, idx) => {
@@ -60,7 +57,7 @@ const NoteBlocksEditable: FC<NoteBlocksEditableProps> = (props) => {
 				}
 				if (block.type === 'todos') {
 					return (
-						<NoteTodosEditable
+						<NoteTodoBlock
 							index={idx}
 							currentFocus={currentFocus}
 							changeFocus={changeFocus}
@@ -85,4 +82,4 @@ const NoteBlocksEditable: FC<NoteBlocksEditableProps> = (props) => {
 	)
 }
 
-export default NoteBlocksEditable
+export default NoteEditorBlocks

@@ -1,20 +1,15 @@
-import { ChatAltIcon, PhotographIcon } from '@heroicons/react/outline'
 import React, { useState } from 'react'
 import { v4 } from 'uuid'
 import { Todo } from '../../../pages'
 import { BlockTypes, NoteBlock, TextBlock, TodoBlock } from '../types'
-import AddBlockButton from './AddBlockButton'
-import NoteBlocksEditable from './NoteBlocksEditable'
+import NoteEditorBlock from './Components/NoteEditorBlock/NoteEditorBlock'
+import NoteDescription from './Components/NoteDescription/NoteDescription'
+import NoteEditorContentWrapper from './Components/Layout/NoteEditorContentWrapper'
+import NoteEditorCover from './Components/NoteEditorCover/NoteEditorCover'
 import NoteEditorHeader from './NoteEditorHeader'
-import NoteTitleEditable from './NoteTitleEditable'
-import Image from 'next/image'
-import NoteDescEditable from './NoteDescEditable'
-import { Popover, Tab } from '@headlessui/react'
-import PopoverTransition from '../../../components/transitions/PopoverTransition'
-import Buttons from '../../../pages/docs/buttons'
-import { Button } from '../../../components'
-import ImageUpload from './Components/ImageUpload'
-import FromImageLink from './Components/ImageLink'
+import NoteEditorToolbar from './Components/NoteEditorToolbar/NoteEditorToolbar'
+import NoteTitle from './Components/NoteTitle/NoteTitle'
+import NoteEditorWrapper from './Components/Layout/NoteEditorWrapper'
 
 const NoteEditor = () => {
 	const [title, setTitle] = useState('')
@@ -154,134 +149,16 @@ const NoteEditor = () => {
 	}
 
 	return (
-		<div className='flex flex-col flex-1'>
+		<NoteEditorWrapper>
 			<NoteEditorHeader />
-			{coverUrl && (
-				<div>
-					<div className='relative w-full h-40 mb-3'>
-						<Image
-							className=''
-							layout='fill'
-							objectFit='cover'
-							src={coverUrl}
-							alt='photo header'
-						/>
-						<div className='absolute bottom-0 right-0 pb-1 pr-1'>
-							<Popover>
-								<Popover.Button className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2 hover:bg-opacity-70'>
-									<ChatAltIcon className='w-4 h-4' />
-									<span className='text-xs'>Change cover</span>
-								</Popover.Button>
-								<PopoverTransition>
-									<Popover.Panel className='absolute right-0 z-50 w-screen max-w-sm p-1'>
-										{(props) => (
-											<div className='w-full border rounded-md bg-bg-1 border-border-1'>
-												<Tab.Group>
-													<Tab.List className='flex gap-2 px-1 py-1 border-b border-border-1'>
-														<Tab className='relative px-2 h-9'>
-															{({ selected }) => (
-																<>
-																	<span>Upload</span>
-																	{selected && (
-																		<div className='absolute bottom-0 left-0 right-0 h-1 bg-accent-primary' />
-																	)}
-																</>
-															)}
-														</Tab>
-														<Tab className='relative px-2 h-9'>
-															{({ selected }) => (
-																<>
-																	<span>From Image Link</span>
-																	{selected && (
-																		<div className='absolute bottom-0 left-0 right-0 h-1 bg-accent-primary' />
-																	)}
-																</>
-															)}
-														</Tab>
-													</Tab.List>
-													<Tab.Panels>
-														<Tab.Panel className='p-2'>
-															<ImageUpload
-																onChange={(file, url) => {
-																	console.log(file, url)
-																	props.close()
-																}}
-															/>
-														</Tab.Panel>
-														<Tab.Panel>
-															<FromImageLink
-																onSubmit={(url) => {
-																	console.log(url)
-																	props.close()
-																}}
-															/>
-														</Tab.Panel>
-													</Tab.Panels>
-												</Tab.Group>
-											</div>
-										)}
-									</Popover.Panel>
-								</PopoverTransition>
-							</Popover>
-						</div>
-					</div>
-				</div>
-			)}
-			<div className='relative flex px-2 transition-all opacity-20 hover:opacity-100'>
-				{!showDescription && (
-					<button
-						tabIndex={1}
-						onClick={() => setShowDescription(true)}
-						className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2'
-					>
-						<ChatAltIcon className='w-4 h-4' />
-						<span className='text-xs'>Add Description</span>
-					</button>
-				)}
-				{!coverUrl && (
-					<button
-						tabIndex={2}
-						onClick={() =>
-							setCoverUrl(
-								'https://images.unsplash.com/photo-1628847022112-822475a94a78?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-							)
-						}
-						className='flex items-center h-8 gap-2 px-2 transition-all rounded-md text-text-2 hover:bg-bg-2'
-					>
-						<PhotographIcon className='w-4 h-4' />
-						<span className='text-xs'>Add Cover</span>
-					</button>
-				)}
-			</div>
-			<div className='flex flex-col flex-1 gap-4 px-4 pt-2'>
-				<NoteTitleEditable
-					title={title}
-					onUpdate={(titleText) => {
-						setTitle(titleText)
-					}}
-				/>
-				{showDescription && (
-					<NoteDescEditable
-						description={description}
-						onBackspaceWhenEmpty={() => {
-							setShowDescription(false)
-						}}
-						onUpdate={(descriptionText) => {
-							setDescription(descriptionText)
-						}}
-					/>
-				)}
-				<NoteBlocksEditable
-					onTextBlockUpdate={handleTextBlockUpdate}
-					onTextBlockDelete={handleTextBlockDelete}
-					onTodoItemDelete={handleTodoItemDelete}
-					onTodoItemAdd={handleTodoItemAdd}
-					onTodoItemUpdate={handleTodoItemUpdate}
-					blocks={blocks}
-				/>
-				<AddBlockButton onBlockAdd={handleBlockAdd} />
-			</div>
-		</div>
+			<NoteEditorCover />
+			<NoteEditorToolbar />
+			<NoteEditorContentWrapper>
+				<NoteTitle />
+				<NoteDescription />
+				<NoteEditorBlock />
+			</NoteEditorContentWrapper>
+		</NoteEditorWrapper>
 	)
 }
 

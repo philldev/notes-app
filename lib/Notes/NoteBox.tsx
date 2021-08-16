@@ -3,7 +3,7 @@ import { LockClosedIcon } from '@heroicons/react/solid'
 import Image from 'next/image'
 import { FC } from 'react'
 import { Note } from '../../pages'
-import NoteTodoItemEditable from './NoteEditor/NoteTodoItemEditable'
+import NoteTodoItemEditable from './NoteEditor/Components/NoteEditorBlock/NoteTodoBlock/NoteTodoItemEditable'
 
 interface NoteBoxProps {
 	note: Note
@@ -43,8 +43,9 @@ const NoteBox: FC<NoteBoxProps> = (props) => {
 							<div className='mb-2'>
 								{body.todos && (
 									<div className='flex flex-col gap-3'>
-										{body.todos.map((t) => (
+										{body.todos.map((t, idx) => (
 											<NoteTodoItemEditable
+												index={idx}
 												key={t.id}
 												completed={t.completed}
 												text={t.text}

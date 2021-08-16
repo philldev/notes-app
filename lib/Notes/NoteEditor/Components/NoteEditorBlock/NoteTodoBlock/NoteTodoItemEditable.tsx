@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
-import { Checkbox } from '../../../components/checkbox'
+import { Checkbox } from '../../../../../../components/checkbox'
 
 interface NoteTodoItemEditableProps {
 	completed?: boolean

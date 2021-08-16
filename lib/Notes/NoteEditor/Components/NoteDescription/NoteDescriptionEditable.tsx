@@ -1,13 +1,13 @@
 import { FC, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
 
-interface NoteTitleEditableProps {
+interface NoteDescriptionEditableProps {
 	description?: string
-	onUpdate: (title: string) => void
+	onUpdate?: (title: string) => void
 	onBackspaceWhenEmpty?: () => void
 }
 
-const NoteDescEditable: FC<NoteTitleEditableProps> = (props) => {
+const NoteDescriptionEditable: FC<NoteDescriptionEditableProps> = (props) => {
 	const html = useRef(props.description ?? '')
 
 	const [hidePlaceholder, setHidePlaceholder] = useState(
@@ -33,7 +33,7 @@ const NoteDescEditable: FC<NoteTitleEditableProps> = (props) => {
 						? setHidePlaceholder(true)
 						: setHidePlaceholder(false)
 					html.current = e.target.value
-					props.onUpdate(html.current)
+					props.onUpdate?.(html.current)
 				}}
 				placeholder='Note description'
 			/>
@@ -41,4 +41,4 @@ const NoteDescEditable: FC<NoteTitleEditableProps> = (props) => {
 	)
 }
 
-export default NoteDescEditable
+export default NoteDescriptionEditable

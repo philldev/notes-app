@@ -1,6 +1,6 @@
 import { PlusIcon } from '@heroicons/react/outline'
 import { FC } from 'react'
-import { BlockTypes } from '../types'
+import { BlockTypes } from '../../../types'
 
 interface AddBlockButtonProps {
 	onBlockAdd: (type: BlockTypes) => void
