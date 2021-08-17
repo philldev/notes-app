@@ -2,7 +2,7 @@ import { Dispatch, useContext, useReducer } from 'react'
 import { createContext, FC } from 'react'
 import { v4 } from 'uuid'
 import { Todo } from '../../../../pages'
-import { NoteBlock, TodoBlock } from '../../types'
+import { NoteBlock, TextBlock, TodoBlock } from '../../types'
 
 interface NoteEditorState {
 	title: string
@@ -128,6 +128,22 @@ const createTodoItem = (): Todo => {
 		id: v4(),
 		text: '',
 		completed: false,
+	}
+}
+
+export const createTextBlock = (): TextBlock => {
+	return {
+		id: v4(),
+		text: '',
+		type: 'text',
+	}
+}
+
+export const createTodoBlock = (): TodoBlock => {
+	return {
+		id: v4(),
+		todos: [createTodoItem()],
+		type: 'todos',
 	}
 }
 

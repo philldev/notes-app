@@ -9,6 +9,7 @@ interface NoteBlocksEditableProps {
 	blocks: NoteBlock[]
 	onTextBlockDelete: (textBlock: TextBlock) => void
 	onTextBlockUpdate: (textBlock: TextBlock) => void
+	onTodoBlockDelete: (todoBlock: TodoBlock) => void
 	onTodoItemDelete: (todo: Todo, todoBlock: TodoBlock) => void
 	onTodoItemAdd: (todoBlock: TodoBlock) => void
 	onTodoItemUpdate: (updatedTodo: Todo, todoBlock: TodoBlock) => void
@@ -59,7 +60,12 @@ const NoteEditorBlocks: FC<NoteBlocksEditableProps> = (props) => {
 							changeFocus={changeFocus}
 							focused={idx === currentFocus}
 							onDeleteTodo={(todo) => {
-								props.onTodoItemDelete(todo, block)
+									if(block.todos.length === 1) {
+										props.onTodoBlockDelete(block)
+										}else {
+
+										props.onTodoItemDelete(todo, block)
+									}
 							}}
 							onAddTodo={() => {
 								props.onTodoItemAdd(block)

@@ -3,9 +3,13 @@ import Image from 'next/image'
 import { Popover, Tab } from '@headlessui/react'
 import { ChatAltIcon } from '@heroicons/react/outline'
 import { FromImageLink, ImageUpload } from '.'
+import { useNoteEditor } from '../../Context/NoteEditorContext'
 
 const NoteEditorCover = () => {
-	const coverUrl = ''
+	const {
+		state: { coverUrl },
+	} = useNoteEditor()
+	if (!coverUrl) return null
 	return (
 		<div>
 			<div className='relative w-full h-40 mb-3'>
