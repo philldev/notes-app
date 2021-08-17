@@ -1,7 +1,6 @@
 import { FC } from 'react'
-import useRoveFocus from '../../../../../hooks/useRoveFocus'
-import { Todo } from '../../../../../pages'
-import { NoteBlock, TextBlock, TodoBlock } from '../../../types'
+import { NoteBlock, TextBlock, Todo, TodoBlock } from '../../../types'
+import useRoveFocus from '../../../../hooks/useRoveFocus'
 import NoteTextEditable from './NoteTextBlock/NoteTextEditable'
 import NoteTodoBlock from './NoteTodoBlock/NoteTodoBlock'
 

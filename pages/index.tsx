@@ -1,33 +1,11 @@
 import React, { Fragment } from 'react'
-import FolderList from '../components/folders/FolderList'
+import FolderList from '../lib/Components/Folder/FolderList'
 import HomeHeader from '../components/home/HomeHeader'
 import HomeNavigation from '../components/home/HomeNavigation'
 import { Tab } from '@headlessui/react'
 import Page from '../components/layout/Page'
-import NoteList from '../lib/Notes/NoteList'
-export interface Todo {
-	id: string
-	completed: boolean
-	text: string
-}
-
-export interface Note {
-	id: string
-	secure?: boolean
-	title?: string
-	location?: string
-	photoURL?: string
-	bodys?: Array<
-		{ todos: Todo[]; type: 'todos' } | { text: string; type: 'text' }
-	>
-	createdAt?: string
-	folder?: string
-}
-
-export interface Folder {
-	id: string
-	name: string
-}
+import NoteList from '../lib/Components/Note/NoteList'
+import { Folder, Note } from '../lib/types'
 
 const notes: Note[] = [
 	{
@@ -37,6 +15,7 @@ const notes: Note[] = [
 		folder: 'ToDo',
 		bodys: [
 			{
+				id: '1',
 				type: 'todos',
 				todos: [
 					{
@@ -70,6 +49,7 @@ const notes: Note[] = [
 		folder: 'Quote',
 		bodys: [
 			{
+				id: '1',
 				type: 'text',
 				text: '"The best preperation for tomorrow is doing your best today." \n \n -H. Jackson Brow, Jr.',
 			},
@@ -80,10 +60,11 @@ const notes: Note[] = [
 		createdAt: 'Dec 24',
 		folder: 'Daily Life',
 		location: 'Kuta Beach',
-		photoURL:
+		coverUrl:
 			'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1353&q=80',
 		bodys: [
 			{
+				id: '1',
 				text: 'I Stayed here for a big family vacation. This is agreate affordable hotel to stay in Bali ...',
 				type: 'text',
 			},
@@ -98,8 +79,10 @@ const notes: Note[] = [
 			{
 				type: 'text',
 				text: 'I have a dream that must come true !!',
+				id: '1',
 			},
 			{
+				id: '2',
 				type: 'todos',
 				todos: [
 					{
@@ -134,6 +117,7 @@ const notes: Note[] = [
 		title: 'Statistika',
 		bodys: [
 			{
+				id:'1',
 				type: 'text',
 				text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere deleniti in voluptatem illo quaerat consequatur, vero eos repudiandae quo ab!',
 			},
@@ -145,6 +129,7 @@ const notes: Note[] = [
 		title: 'Statistika',
 		bodys: [
 			{
+				id:'1',
 				type: 'text',
 				text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere deleniti in voluptatem illo quaerat consequatur, vero eos repudiandae quo ab!',
 			},

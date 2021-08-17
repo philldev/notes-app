@@ -1,9 +1,9 @@
+import NoteTodoItemEditable from '../../NoteEditor/Components/NoteEditorBlock/NoteTodoBlock/NoteTodoItemEditable'
+import Image from 'next/image'
 import { LocationMarkerIcon } from '@heroicons/react/outline'
 import { LockClosedIcon } from '@heroicons/react/solid'
-import Image from 'next/image'
 import { FC } from 'react'
-import { Note } from '../../pages'
-import NoteTodoItemEditable from './NoteEditor/Components/NoteEditorBlock/NoteTodoBlock/NoteTodoItemEditable'
+import { Note } from '../../types'
 
 interface NoteBoxProps {
 	note: Note
@@ -12,13 +12,13 @@ interface NoteBoxProps {
 const NoteBox: FC<NoteBoxProps> = (props) => {
 	return (
 		<div className='pb-3 rounded-2xl bg-bg-2'>
-			{props.note.photoURL && (
+			{props.note.coverUrl && (
 				<div className='relative w-full h-20 mb-3'>
 					<Image
 						className='rounded-2xl'
 						layout='fill'
 						objectFit='cover'
-						src={props.note.photoURL}
+						src={props.note.coverUrl}
 						alt='photo header'
 					/>
 				</div>
@@ -55,9 +55,10 @@ const NoteBox: FC<NoteBoxProps> = (props) => {
 								)}
 							</div>
 						) : (
-							<div className='mb-2 text-xs whitespace-pre-line'>
-								{body.text}
-							</div>
+							<div
+								className='mb-2 text-xs whitespace-pre-line'
+								dangerouslySetInnerHTML={{ __html: body.text }}
+							/>
 						)
 					)}
 				</div>

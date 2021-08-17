@@ -1,5 +1,5 @@
 import { ChangeEvent, FC } from 'react'
-import { Button } from '../../../../../components'
+import { Button } from '../../../../components'
 
 interface ImageUploadProps {
 	onChange: (file: File, url: string) => void

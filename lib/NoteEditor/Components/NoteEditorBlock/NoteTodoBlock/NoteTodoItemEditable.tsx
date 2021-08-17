@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
-import { Checkbox } from '../../../../../../components/checkbox'
+import { Checkbox } from '../../../../../components/checkbox'
 
 interface NoteTodoItemEditableProps {
 	completed?: boolean
@@ -50,6 +50,7 @@ const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
 					</p>
 				) : null}
 				<ContentEditable
+					contentEditable={props.editing}
 					innerRef={ref}
 					tagName='div'
 					disabled={!props.editing}

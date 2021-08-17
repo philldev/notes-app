@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Note } from '../../pages'
+import { Note } from '../../types'
 import AddNoteButton from './AddNoteButton'
 import NoteBox from './NoteBox'
 

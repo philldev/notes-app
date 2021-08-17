@@ -1,8 +1,7 @@
 import { Dispatch, useContext, useReducer } from 'react'
 import { createContext, FC } from 'react'
 import { v4 } from 'uuid'
-import { Todo } from '../../../../pages'
-import { NoteBlock, TextBlock, TodoBlock } from '../../types'
+import { NoteBlock, TextBlock, Todo, TodoBlock } from '../../types'
 
 interface NoteEditorState {
 	title: string

@@ -1,4 +1,4 @@
-import PopoverTransition from '../../../../../components/transitions/PopoverTransition'
+import PopoverTransition from '../../../../components/transitions/PopoverTransition'
 import Image from 'next/image'
 import { Popover, Tab } from '@headlessui/react'
 import { ChatAltIcon } from '@heroicons/react/outline'

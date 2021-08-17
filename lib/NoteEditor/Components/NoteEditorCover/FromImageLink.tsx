@@ -1,5 +1,5 @@
 import { FC, FormEvent, useRef, useState } from 'react'
-import { Button } from '../../../../../components'
+import { Button } from '../../../../components'
 
 interface FromImageLinkProps {
 	onSubmit: (imageUrl: string) => void
