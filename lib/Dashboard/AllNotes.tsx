@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { FC, Fragment } from 'react'
 import NoteList from '../../components/Note/NoteList'
 import { Note } from '../types'
-import { folders } from './Folders'
+import { folders } from './AllFolders'
 
 interface AllNotesProps {}
 

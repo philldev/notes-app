@@ -3,7 +3,7 @@ import { FC, Fragment } from 'react'
 import DashboardHeader from '../../components/Dashboard/DashboardHeader'
 import DashboardNavigation from '../../components/Dashboard/DashboardNavigation'
 import AllNotes from './AllNotes'
-import Folders from './Folders'
+import AllFolders from './AllFolders'
 
 interface DashboardProps {}
 
@@ -17,7 +17,7 @@ const Dashboard: FC<DashboardProps> = (props) => {
 				</Tab.List>
 				<Tab.Panels as={Fragment}>
 					<AllNotes />
-					<Folders />
+					<AllFolders />
 				</Tab.Panels>
 			</Tab.Group>
 		</>

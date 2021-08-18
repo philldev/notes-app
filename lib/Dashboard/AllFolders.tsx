@@ -28,7 +28,7 @@ export const folders: Folder[] = [
 	},
 ]
 
-const Folders: FC<FoldersProps> = () => {
+const AllFolders: FC<FoldersProps> = () => {
 	return (
 		<Tab.Panel as={Fragment}>
 			<FolderList folders={folders} />
@@ -36,4 +36,4 @@ const Folders: FC<FoldersProps> = () => {
 	)
 }
 
-export default Folders
+export default AllFolders
