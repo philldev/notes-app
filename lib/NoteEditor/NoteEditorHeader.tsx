@@ -1,9 +1,11 @@
 import { ArrowLeftIcon, DotsHorizontalIcon } from '@heroicons/react/outline'
 import { FolderIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
+import { useNoteEditor } from './Context/NoteEditorContext'
 
 const NoteEditorHeader = () => {
 	const router = useRouter()
+	const {state} = useNoteEditor()
 	return (
 		<div className='flex items-center justify-between px-4 h-14'>
 			<div className='flex flex-1 gap-4'>
@@ -17,7 +19,7 @@ const NoteEditorHeader = () => {
 				</button>
 				<h3 className='flex items-center flex-1 gap-2 text-text-2'>
 					<FolderIcon className='w-5 h-5' />
-					<span className='flex-1'>Folder Name</span>
+					<span className='flex-1'>{state.folder?.name}</span>
 				</h3>
 			</div>
 			<div className='flex items-center gap-3'>

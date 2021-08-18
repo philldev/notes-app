@@ -1,17 +1,18 @@
-import NoteTodoItemEditable from '../../NoteEditor/Components/NoteEditorBlock/NoteTodoBlock/NoteTodoItemEditable'
+import NoteTodoItemEditable from '../../lib/NoteEditor/Components/NoteEditorBlock/NoteTodoBlock/NoteTodoItemEditable'
 import Image from 'next/image'
 import { LocationMarkerIcon } from '@heroicons/react/outline'
 import { LockClosedIcon } from '@heroicons/react/solid'
 import { FC } from 'react'
-import { Note } from '../../types'
+import { Note } from '../../lib/types'
 
 interface NoteBoxProps {
 	note: Note
+	onClick?: () => void
 }
 
 const NoteBox: FC<NoteBoxProps> = (props) => {
 	return (
-		<div className='pb-3 rounded-2xl bg-bg-2'>
+		<div onClick={props.onClick} className='pb-3 rounded-2xl bg-bg-2'>
 			{props.note.coverUrl && (
 				<div className='relative w-full h-20 mb-3'>
 					<Image
@@ -38,9 +39,9 @@ const NoteBox: FC<NoteBoxProps> = (props) => {
 				</div>
 			) : (
 				<div className='px-3 mb-4'>
-					{props.note.bodys?.map((body) =>
+					{props.note.blocks?.map((body) =>
 						body.type === 'todos' ? (
-							<div className='mb-2'>
+							<div key={body.id} className='mb-2'>
 								{body.todos && (
 									<div className='flex flex-col gap-3'>
 										{body.todos.map((t, idx) => (
@@ -65,7 +66,7 @@ const NoteBox: FC<NoteBoxProps> = (props) => {
 			)}
 			<div className='flex justify-between px-3'>
 				<p className='text-xs text-text-2'>{props.note.createdAt}</p>
-				<p className='text-xs text-text-2'>{props.note.folder}</p>
+				<p className='text-xs text-text-2'>{props.note.folder?.name}</p>
 			</div>
 		</div>
 	)

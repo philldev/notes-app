@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Folder } from '../../types'
+import { Folder } from '../../lib/types'
 import FolderItem from './FolderItem'
 
 interface FolderListProps {

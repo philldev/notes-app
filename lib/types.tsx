@@ -25,16 +25,19 @@ export interface Todo {
 
 export interface Note {
 	id: string
-	secure?: boolean
-	title?: string
+	blocks: Array<NoteBlock>
+	title: string
+	description?: string | null
 	location?: string
-	coverUrl?: string
-	bodys?: Array<NoteBlock>
+	coverUrl?: null | string
+	secure?: boolean
+	folder?: Folder
 	createdAt?: string
-	folder?: string
 }
 
 export interface Folder {
 	id: string
 	name: string
 }
+
+export type AsyncStatus = 'Loading' | 'Loaded' | 'Error'

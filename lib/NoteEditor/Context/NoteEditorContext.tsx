@@ -1,13 +1,13 @@
 import { Dispatch, useContext, useReducer } from 'react'
 import { createContext, FC } from 'react'
 import { v4 } from 'uuid'
-import { NoteBlock, TextBlock, Todo, TodoBlock } from '../../types'
+import { Note, NoteBlock, TextBlock, Todo, TodoBlock } from '../../types'
 
-interface NoteEditorState {
-	title: string
-	description: string | null
-	coverUrl: string | null
-	blocks: NoteBlock[]
+interface NoteEditorState extends Note {}
+
+type NoteEditorContextValue = {
+	state: NoteEditorState
+	dispatch: Dispatch<NoteEditorActions>
 }
 
 type NoteEditorActions =
@@ -287,22 +287,40 @@ const noteEditorReducer = (
 	}
 }
 
-type NoteEditorContextValue = {
-	state: NoteEditorState
-	dispatch: Dispatch<NoteEditorActions>
-}
-
 const NoteEditorContext = createContext<NoteEditorContextValue | undefined>(
 	undefined
 )
 
-export const NoteEditorProvider: FC = ({ children }) => {
-	const [state, dispatch] = useReducer(noteEditorReducer, {
-		title: '',
-		description: null,
-		coverUrl: null,
-		blocks: [{ type: 'text', id: Date.now().toString(), text: '' }],
-	})
+const initialState = (): NoteEditorState => ({
+	id: v4(),
+	title: '',
+	description: null,
+	coverUrl: null,
+	blocks: [{ type: 'text', id: Date.now().toString(), text: '' }],
+	createdAt: Date.now().toString(),
+})
+
+const createInitialState = (initialNote?: Note): NoteEditorState => {
+	if (initialNote) {
+		return {
+			...initialNote,
+		}
+	}
+	return initialState()
+}
+
+interface NoteEditorProviderProps {
+	note?: Note
+}
+
+export const NoteEditorProvider: FC<NoteEditorProviderProps> = ({
+	children,
+	note,
+}) => {
+	const [state, dispatch] = useReducer(
+		noteEditorReducer,
+		createInitialState(note)
+	)
 
 	return (
 		<NoteEditorContext.Provider

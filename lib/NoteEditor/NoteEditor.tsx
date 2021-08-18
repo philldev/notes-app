@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { FC } from 'react'
+import { Note } from '../types'
+import { NoteEditorProvider } from './Context/NoteEditorContext'
 import NoteEditorContentWrapper from './Components/Layout/NoteEditorContentWrapper'
 import NoteEditorWrapper from './Components/Layout/NoteEditorWrapper'
 import NoteDescription from './Components/NoteDescription/NoteDescription'
@@ -6,12 +8,15 @@ import NoteEditorBlock from './Components/NoteEditorBlock/NoteEditorBlock'
 import NoteEditorCover from './Components/NoteEditorCover/NoteEditorCover'
 import NoteEditorToolbar from './Components/NoteEditorToolbar/NoteEditorToolbar'
 import NoteTitle from './Components/NoteTitle/NoteTitle'
-import { NoteEditorProvider } from './Context/NoteEditorContext'
 import NoteEditorHeader from './NoteEditorHeader'
 
-const NoteEditor = () => {
+interface NoteEditorProps{
+	note? : Note
+}
+
+const NoteEditor : FC<NoteEditorProps> = ({note}) => {
 	return (
-		<NoteEditorProvider>
+		<NoteEditorProvider note={note}>
 			<NoteEditorWrapper>
 				<NoteEditorHeader />
 				<NoteEditorCover />

@@ -1,6 +1,6 @@
 import { FolderIcon } from "@heroicons/react/solid"
 import { FC } from "react"
-import { Folder } from "../../types"
+import { Folder } from "../../lib/types"
 
 
 interface FolderItemProps {

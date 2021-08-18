@@ -25,8 +25,6 @@ const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
 	)
 	const ref = useRef<HTMLElement | null>(null)
 
-	console.log(props.index)
-
 	useEffect(() => {
 		if (props.focused) {
 			// Move element into view when it is focused
