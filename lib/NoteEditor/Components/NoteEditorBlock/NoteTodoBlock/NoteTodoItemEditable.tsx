@@ -68,6 +68,8 @@ const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
 							? setHidePlaceholder(true)
 							: setHidePlaceholder(false)
 						text.current = e.target.value
+							.replace(/<div>/g, '<br>')
+							.replace(/<\/div>/g, '')
 						props.onTextChange?.(text.current)
 					}}
 					className={`flex-1 relative z-20 text-xs outline-none ${

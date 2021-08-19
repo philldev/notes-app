@@ -1,6 +1,6 @@
 import { PlusIcon } from '@heroicons/react/outline'
 import { FC, useMemo } from 'react'
-import { Todo } from '../../../../../pages'
+import { Todo } from '../../../../types'
 import NoteTodoItemEditable from './NoteTodoItemEditable'
 
 interface NoteTodoBlocksProps {

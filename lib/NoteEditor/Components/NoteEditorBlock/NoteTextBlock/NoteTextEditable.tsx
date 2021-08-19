@@ -13,7 +13,7 @@ interface NoteTextEditableProps {
 }
 
 const NoteTextEditable: FC<NoteTextEditableProps> = (props) => {
-	const html = useRef(props.text ?? '')
+	const html = useRef(props.text ?? 'asasdd')
 
 	const [hidePlaceholder, setHidePlaceholder] = useState(
 		html.current.length > 0
@@ -41,6 +41,7 @@ const NoteTextEditable: FC<NoteTextEditableProps> = (props) => {
 			) : null}
 			<ContentEditable
 				innerRef={ref}
+				tagName='div'
 				html={html.current}
 				className='relative z-10 outline-none'
 				onClick={handleSelect}
@@ -55,6 +56,8 @@ const NoteTextEditable: FC<NoteTextEditableProps> = (props) => {
 						? setHidePlaceholder(true)
 						: setHidePlaceholder(false)
 					html.current = e.target.value
+						.replace(/<div>/g, '<br>')
+						.replace(/<\/div>/g, '')
 					props.onTextChange(html.current)
 				}}
 				placeholder='Take a note'
