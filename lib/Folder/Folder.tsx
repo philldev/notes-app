@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router'
 import { FC, useEffect, useState } from 'react'
 import NoteList from '../../components/Note/NoteList'
-import { folders } from '../Dashboard/AllFolders'
-import { notes } from '../Dashboard/AllNotes'
+import { folders, notes } from '../NotesProvider/NotesProvider'
 import { AsyncStatus, Folder as FolderType, Note } from '../types'
 import FolderHeader from './FolderHeader'
 

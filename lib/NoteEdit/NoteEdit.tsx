@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
-import { notes } from '../Dashboard/AllNotes'
 import NoteEditor from '../NoteEditor/NoteEditor'
+import { notes } from '../NotesProvider/NotesProvider'
 import { AsyncStatus, Note } from '../types'
 
 interface NoteEditProps {

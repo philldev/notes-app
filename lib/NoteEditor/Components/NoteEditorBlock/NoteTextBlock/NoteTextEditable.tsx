@@ -1,5 +1,6 @@
-import { FC, RefObject, useCallback, useEffect, useRef, useState } from 'react'
+import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
+import sanitize, * as sanitizeHtml from 'sanitize-html'
 
 interface NoteTextEditableProps {
 	focused?: boolean

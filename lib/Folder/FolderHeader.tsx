@@ -3,10 +3,10 @@ import { FolderIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 
 interface FolderHeaderProps {
-	name : string;
+	name: string
 }
 
-const FolderHeader = (props : FolderHeaderProps) => {
+const FolderHeader = (props: FolderHeaderProps) => {
 	const router = useRouter()
 	return (
 		<div className='flex items-center justify-between px-4 h-14'>
@@ -14,7 +14,10 @@ const FolderHeader = (props : FolderHeaderProps) => {
 				<button
 					className='p-2 rounded-md hover:bg-bg-2'
 					onClick={() => {
-						router.back()
+						router.push({
+							pathname: '/',
+							query: { tab: 'folders' },
+						})
 					}}
 				>
 					<ArrowLeftIcon className='w-4 h-4 text-text-2' />

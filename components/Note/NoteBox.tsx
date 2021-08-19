@@ -56,10 +56,12 @@ const NoteBox: FC<NoteBoxProps> = (props) => {
 								)}
 							</div>
 						) : (
-							<div
-								className='mb-2 text-xs whitespace-pre-line'
-								dangerouslySetInnerHTML={{ __html: body.text }}
-							/>
+							<div className='mb-2'>
+								<div
+									className='overflow-hidden text-xs'
+									dangerouslySetInnerHTML={{ __html: body.text }}
+								/>
+							</div>
 						)
 					)}
 				</div>
