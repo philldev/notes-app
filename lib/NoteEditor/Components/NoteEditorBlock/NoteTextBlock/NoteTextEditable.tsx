@@ -1,6 +1,5 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
-import sanitize, * as sanitizeHtml from 'sanitize-html'
 
 interface NoteTextEditableProps {
 	focused?: boolean
@@ -13,7 +12,7 @@ interface NoteTextEditableProps {
 }
 
 const NoteTextEditable: FC<NoteTextEditableProps> = (props) => {
-	const html = useRef(props.text ?? 'asasdd')
+	const html = useRef(props.text ?? '')
 
 	const [hidePlaceholder, setHidePlaceholder] = useState(
 		html.current.length > 0

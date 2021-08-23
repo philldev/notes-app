@@ -1,11 +1,18 @@
-import { ArrowLeftIcon, DotsHorizontalIcon } from '@heroicons/react/outline'
+import { Menu } from '@headlessui/react'
+import {
+	ArrowLeftIcon,
+	DotsHorizontalIcon,
+	DuplicateIcon,
+	TrashIcon,
+} from '@heroicons/react/outline'
 import { FolderIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
+import PopoverTransition from '../../components/transitions/PopoverTransition'
 import { useNoteEditor } from './Context/NoteEditorContext'
 
 const NoteEditorHeader = () => {
 	const router = useRouter()
-	const {state} = useNoteEditor()
+	const { state } = useNoteEditor()
 	return (
 		<div className='flex items-center justify-between px-4 h-14'>
 			<div className='flex flex-1 gap-4'>
@@ -22,11 +29,26 @@ const NoteEditorHeader = () => {
 					<span className='flex-1'>{state.folder?.name}</span>
 				</h3>
 			</div>
-			<div className='flex items-center gap-3'>
-				<button className='p-2 text-sm rounded-md text-text-2 hover:bg-bg-2'>
-					<DotsHorizontalIcon className='w-4 h-4' />
-				</button>
-			</div>
+			<Menu as='div' className='relative flex items-center gap-3'>
+				<Menu.Button className='flex items-center justify-center w-8 h-8 text-sm rounded-md text-text-2 hover:bg-bg-2'>
+					<DotsHorizontalIcon className='w-5 h-5' />
+				</Menu.Button>
+				<PopoverTransition>
+					<Menu.Items className='absolute right-0 mt-2 overflow-x-hidden border rounded w-44 bg-bg-2 top-full border-border-1'>
+						<Menu.Item>
+							<button className='flex items-center px-4 py-2 '>
+								<TrashIcon className='flex-shrink-0 w-4 h-4 mr-2' /> <span>Delete Note</span>
+							</button>
+						</Menu.Item>
+
+							<Menu.Item>
+								<button className='flex items-center px-4 py-2 '>
+									<DuplicateIcon className='flex-shrink-0 w-4 h-4 mr-2' /> <span>Duplicate Note</span>
+								</button>
+							</Menu.Item>
+					</Menu.Items>
+				</PopoverTransition>
+			</Menu>
 		</div>
 	)
 }

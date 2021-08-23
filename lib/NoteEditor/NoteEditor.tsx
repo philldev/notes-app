@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Note } from '../types'
+import { Folder, Note } from '../types'
 import { NoteEditorProvider } from './Context/NoteEditorContext'
 import NoteEditorContentWrapper from './Components/Layout/NoteEditorContentWrapper'
 import NoteEditorWrapper from './Components/Layout/NoteEditorWrapper'
@@ -12,11 +12,12 @@ import NoteEditorHeader from './NoteEditorHeader'
 
 interface NoteEditorProps{
 	note? : Note
+	folder? : Folder
 }
 
-const NoteEditor : FC<NoteEditorProps> = ({note}) => {
+const NoteEditor : FC<NoteEditorProps> = ({note, folder}) => {
 	return (
-		<NoteEditorProvider note={note}>
+		<NoteEditorProvider note={note} folder={folder}>
 			<NoteEditorWrapper>
 				<NoteEditorHeader />
 				<NoteEditorCover />

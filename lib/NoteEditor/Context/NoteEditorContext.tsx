@@ -1,7 +1,7 @@
 import { Dispatch, useContext, useReducer } from 'react'
 import { createContext, FC } from 'react'
 import { v4 } from 'uuid'
-import { Note, NoteBlock, TextBlock, Todo, TodoBlock } from '../../types'
+import { Folder, Note, NoteBlock, TextBlock, Todo, TodoBlock } from '../../types'
 
 interface NoteEditorState extends Note {}
 
@@ -300,26 +300,34 @@ const initialState = (): NoteEditorState => ({
 	createdAt: Date.now().toString(),
 })
 
-const createInitialState = (initialNote?: Note): NoteEditorState => {
+const createInitialState = (initialNote?: Note, folder?: Folder): NoteEditorState => {
 	if (initialNote) {
 		return {
 			...initialNote,
+		}
+	}
+	if(folder) {
+		return {
+			...initialState(),
+			folder
 		}
 	}
 	return initialState()
 }
 
 interface NoteEditorProviderProps {
-	note?: Note
+	note? : Note
+	folder? : Folder
 }
 
 export const NoteEditorProvider: FC<NoteEditorProviderProps> = ({
 	children,
 	note,
+	folder
 }) => {
 	const [state, dispatch] = useReducer(
 		noteEditorReducer,
-		createInitialState(note)
+		createInitialState(note, folder)
 	)
 
 	return (

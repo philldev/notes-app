@@ -5,6 +5,7 @@ import { Folder } from '../../lib/types'
 
 interface FolderItemProps {
 	folder: Folder
+	onClick: (folder : Folder) => void
 }
 
 const FolderItem: FC<FolderItemProps> = (props) => {
@@ -12,7 +13,7 @@ const FolderItem: FC<FolderItemProps> = (props) => {
 	return (
 		<div
 			onClick={() => {
-				router.push('/folders/' + props.folder.id)
+				props.onClick(props.folder)
 			}}
 			className='relative flex items-end justify-center h-44 rounded-2xl bg-bg-2'
 		>
