@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { FC, useEffect, useState } from 'react'
 import NoteList from '../../components/Note/NoteList'
-import { folders, notes } from '../NotesProvider/NotesProvider'
+import { useNotes } from '../NotesProvider/NotesProvider'
 import { AsyncStatus, Folder as FolderType, Note } from '../types'
 import FolderHeader from './FolderHeader'
 
@@ -24,6 +24,10 @@ const initialState: FolderState = {
 const useFolder = ({ folderId }: FolderProps) => {
 	const [state, setState] = useState(initialState)
 
+	const {
+		state: { folders, notes },
+	} = useNotes()
+
 	useEffect(() => {
 		const fetchFolder = () => {
 			const folder = folders.find((n) => n.id === folderId)
@@ -44,7 +48,7 @@ const useFolder = ({ folderId }: FolderProps) => {
 		}
 
 		fetchFolder()
-	}, [folderId])
+	}, [folderId, folders, notes ])
 
 	return {
 		isLoading: state.status === 'Loading',

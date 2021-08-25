@@ -1,5 +1,6 @@
-import { createContext, Dispatch, FC, useContext, useReducer } from 'react'
+import { createContext, FC, useContext, useReducer } from 'react'
 import { Folder, Note } from '../types'
+import { v4 } from 'uuid'
 
 export const folders: Folder[] = [
 	{
@@ -178,7 +179,7 @@ type Action =
 	  }
 	| {
 			type: 'ADD_FOLDER'
-			payload: { folder: Folder }
+			payload: { folderName: string }
 	  }
 	| {
 			type: 'UPDATE_FOLDER'
@@ -214,11 +215,10 @@ const handleUpdateNote = (
 	}
 }
 
-
-const handleAddFolder = (state: State, newFolder: Folder): State => {
+const handleAddFolder = (state: State, folderName: string): State => {
 	return {
 		...state,
-		folders: [...state.folders, newFolder],
+		folders: [...state.folders, { id: v4(), name: folderName }],
 	}
 }
 
@@ -236,7 +236,9 @@ const handleUpdateFolder = (
 ): State => {
 	return {
 		...state,
-		folders: state.folders.map((folder) => (folder.id === folderId ? updatedFolder : folder)),
+		folders: state.folders.map((folder) =>
+			folder.id === folderId ? updatedFolder : folder
+		),
 	}
 }
 
@@ -253,7 +255,7 @@ const notesReducer = (state: State, action: Action): State => {
 		case 'DELETE_NOTE':
 			return handleDeleteNote(state, action.payload.noteId)
 		case 'ADD_FOLDER':
-			return handleAddFolder(state, action.payload.folder)
+			return handleAddFolder(state, action.payload.folderName)
 		case 'UPDATE_FOLDER':
 			return handleUpdateFolder(
 				state,
@@ -272,12 +274,20 @@ type ContextValue = {
 	addNote: (note: Note) => void
 	updateNote: (note: Note) => void
 	deleteNote: (note: Note) => void
+	addFolder: (folderName: string) => void
 }
 
 const NotesContext = createContext<undefined | ContextValue>(undefined)
 
 export const NotesProvider: FC = ({ children }) => {
-	const [state, dispatch] = useReducer(notesReducer, { notes : [], folders: [] })
+	const [state, dispatch] = useReducer(notesReducer, { notes: [], folders: [] })
+
+	const addFolder = (folderName: string) => {
+		dispatch({
+			type: 'ADD_FOLDER',
+			payload: { folderName },
+		})
+	}
 
 	const addNote = (note: Note) => {
 		dispatch({
@@ -301,7 +311,7 @@ export const NotesProvider: FC = ({ children }) => {
 	}
 
 	return (
-		<NotesContext.Provider value={{ state, deleteNote, updateNote, addNote }}>
+		<NotesContext.Provider value={{ state, deleteNote, updateNote, addNote, addFolder }}>
 			{children}
 		</NotesContext.Provider>
 	)

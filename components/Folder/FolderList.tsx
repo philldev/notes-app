@@ -1,10 +1,12 @@
 import { FC } from 'react'
 import { Folder } from '../../lib/types'
 import FolderItem from './FolderItem'
+import NewFolder from './NewFolder'
 
 interface FolderListProps {
 	folders: Folder[]
 	onFolderClick: (folder: Folder) => void
+	onFolderAdd: (folderName: string) => void
 }
 
 const FolderList: FC<FolderListProps> = (props) => {
@@ -17,6 +19,7 @@ const FolderList: FC<FolderListProps> = (props) => {
 					key={f.id}
 				/>
 			))}
+			<NewFolder onFolderAdd={props.onFolderAdd} />
 		</div>
 	)
 }

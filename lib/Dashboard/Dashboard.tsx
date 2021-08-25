@@ -20,15 +20,18 @@ const Dashboard: FC<DashboardProps> = (props) => {
 					else if (index === 1) router.push({ query: { tab: 'folders' } })
 				}}
 				defaultIndex={defaultTab}
-				
 				as={Fragment}
 			>
 				<Tab.List>
 					<DashboardNavigation />
 				</Tab.List>
 				<Tab.Panels as={Fragment}>
-					<AllNotes />
-					<AllFolders />
+					<Tab.Panel>
+						<AllNotes />
+					</Tab.Panel>
+					<Tab.Panel>
+						<AllFolders />
+					</Tab.Panel>
 				</Tab.Panels>
 			</Tab.Group>
 		</>

@@ -12,7 +12,7 @@ interface SelectFolderProps {
 
 const SelectFolder: FC<SelectFolderProps> = (props) => {
 	const router = useRouter()
-	const { state } = useNotes()
+	const { state, addFolder } = useNotes()
 	return (
 		<div className='flex-col flex-1'>
 			<div className='flex items-center justify-between px-4 h-14'>
@@ -23,22 +23,25 @@ const SelectFolder: FC<SelectFolderProps> = (props) => {
 							router.back()
 						}}
 					>
-						<ArrowLeftIcon className='w-4 h-4 text-text-2' />
+						<ArrowLeftIcon className='w-6 h-6 text-text-2' />
 					</button>
 					<h3 className='flex items-center flex-1 gap-2 text-text-2'>
 						Select Folder
 					</h3>
 				</div>
 				<button className='flex items-center justify-center p-2 text-sm rounded-md text-text-2 hover:bg-bg-2'>
-					<PlusIcon className='w-4 h-4 text-text-2' />
+					<PlusIcon className='w-6 h-6 text-text-2' />
 				</button>
 				<button className='flex items-center justify-center p-2 text-sm rounded-md text-text-2 hover:bg-bg-2'>
-					<SearchIcon className='w-4 h-4 text-text-2' />
+					<SearchIcon className='w-6 h-6 text-text-2' />
 				</button>
 			</div>
 			<div className='flex flex-col flex-1'>
 				<FolderList
 					onFolderClick={(folder) => props.onFolderSelect(folder)}
+					onFolderAdd={(folderName) => {
+						addFolder(folderName)
+					}}
 					folders={state.folders}
 				/>
 			</div>

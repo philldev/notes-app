@@ -6,14 +6,20 @@ import { useNotes } from '../NotesProvider/NotesProvider'
 
 interface FoldersProps {}
 
-
 const AllFolders: FC<FoldersProps> = () => {
-	const {state} = useNotes()
+	const { state } = useNotes()
 	const router = useRouter()
+	const { addFolder } = useNotes()
 	return (
-		<Tab.Panel as={Fragment}>
-			<FolderList onFolderClick={(folder) => {router.push(`/folders/${folder.id}`)}} folders={state.folders} />
-		</Tab.Panel>
+		<FolderList
+			onFolderAdd={(folderName) => {
+				addFolder(folderName)
+			}}
+			onFolderClick={(folder) => {
+				router.push(`/folders/${folder.id}`)
+			}}
+			folders={state.folders}
+		/>
 	)
 }
 
