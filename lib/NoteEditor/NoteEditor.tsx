@@ -13,7 +13,7 @@ import { Button } from '../../components'
 import NoteEditorActions from './NoteEditorActions'
 
 interface NoteEditorProps{
-	note? : Note
+	note : Note
 	folder? : Folder
 }
 
@@ -30,7 +30,6 @@ const NoteEditor : FC<NoteEditorProps> = ({note, folder}) => {
 					<NoteEditorBlock />
 				</NoteEditorContentWrapper>
 			</NoteEditorWrapper>
-			<NoteEditorActions />
 		</NoteEditorProvider>
 	)
 }

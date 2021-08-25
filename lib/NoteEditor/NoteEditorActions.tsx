@@ -16,13 +16,6 @@ const NoteEditorActions: FC<NoteEditorActionsProps> = () => {
 	const isDisabled = note.title === ''
 
 	const handleSaveNote = () => {
-		const isInNotes = notes.includes(note)
-
-		if (isInNotes) {
-			updateNote(note)
-		} else {
-			addNote(note)
-		}
 	}
 	return (
 		<div className='fixed bottom-0 left-0 right-0 p-2 border-t border-border-1'>

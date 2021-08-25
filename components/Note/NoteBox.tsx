@@ -1,9 +1,10 @@
 import NoteTodoItemEditable from '../../lib/NoteEditor/Components/NoteEditorBlock/NoteTodoBlock/NoteTodoItemEditable'
 import Image from 'next/image'
-import { LocationMarkerIcon } from '@heroicons/react/outline'
+import { FolderIcon, LocationMarkerIcon } from '@heroicons/react/outline'
 import { LockClosedIcon } from '@heroicons/react/solid'
 import { FC } from 'react'
 import { Note } from '../../lib/types'
+import dayjs from 'dayjs'
 
 interface NoteBoxProps {
 	note: Note
@@ -39,7 +40,7 @@ const NoteBox: FC<NoteBoxProps> = (props) => {
 				</div>
 			) : (
 				<div className='px-3 mb-4'>
-					{props.note.blocks?.map((body) =>
+					{props.note.blocks?.slice(0, 1).map((body) =>
 						body.type === 'todos' ? (
 							<div key={body.id} className='mb-2'>
 								{body.todos && (
@@ -66,9 +67,14 @@ const NoteBox: FC<NoteBoxProps> = (props) => {
 					)}
 				</div>
 			)}
-			<div className='flex justify-between px-3'>
-				<p className='text-xs text-text-2'>{props.note.createdAt}</p>
-				<p className='text-xs text-text-2'>{props.note.folder?.name}</p>
+			<div className='flex w-full px-3 overflow-hidden'>
+				<p className='flex-1 mr-2 text-xs text-text-2'>
+					{dayjs(props.note.createdAt).format('DD/MM/YYYY')}
+				</p>
+				<p className='flex items-center text-xs truncate text-text-2'>
+					<FolderIcon className='flex-shrink-0 w-4 h-4 mr-1' />{' '}
+					<span className='truncate'>{props.note.folder?.name}</span>
+				</p>
 			</div>
 		</div>
 	)

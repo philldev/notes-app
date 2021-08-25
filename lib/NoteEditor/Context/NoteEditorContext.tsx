@@ -1,6 +1,7 @@
-import { Dispatch, useContext, useReducer } from 'react'
+import { Dispatch, useContext, useEffect, useReducer } from 'react'
 import { createContext, FC } from 'react'
 import { v4 } from 'uuid'
+import { useNotes } from '../../NotesProvider/NotesProvider'
 import { Folder, Note, NoteBlock, TextBlock, Todo, TodoBlock } from '../../types'
 
 interface NoteEditorState extends Note {}
@@ -291,32 +292,19 @@ const NoteEditorContext = createContext<NoteEditorContextValue | undefined>(
 	undefined
 )
 
-const initialState = (): NoteEditorState => ({
+export const createNewNote = (folder: Folder): NoteEditorState => ({
 	id: v4(),
-	title: '',
+	title: 'Untitled Note',
 	description: null,
 	coverUrl: null,
 	blocks: [{ type: 'text', id: Date.now().toString(), text: '' }],
-	createdAt: Date.now().toString(),
+	createdAt: new Date().toISOString(),
+	folder
 })
 
-const createInitialState = (initialNote?: Note, folder?: Folder): NoteEditorState => {
-	if (initialNote) {
-		return {
-			...initialNote,
-		}
-	}
-	if(folder) {
-		return {
-			...initialState(),
-			folder
-		}
-	}
-	return initialState()
-}
 
 interface NoteEditorProviderProps {
-	note? : Note
+	note : Note
 	folder? : Folder
 }
 
@@ -327,8 +315,11 @@ export const NoteEditorProvider: FC<NoteEditorProviderProps> = ({
 }) => {
 	const [state, dispatch] = useReducer(
 		noteEditorReducer,
-		createInitialState(note, folder)
+		note
 	)
+
+	const {addNote} = useNotes()
+
 
 	return (
 		<NoteEditorContext.Provider

@@ -11,8 +11,8 @@ interface NoteListProps {
 const NoteList: FC<NoteListProps> = (props) => {
 	return (
 		<>
-			<div className='flex flex-1 gap-4 px-4 pt-2 overflow-y-scroll'>
-				<div className='flex flex-col flex-1 gap-4'>
+			<div className='grid flex-1 grid-cols-2 gap-4 px-4 pt-2 overflow-y-scroll'>
+				<div className='flex flex-col flex-1 flex-grow-0 gap-4'>
 					{props.notes
 						.filter((t, idx) => idx % 2 === 0)
 						.map((note) => (
@@ -25,7 +25,7 @@ const NoteList: FC<NoteListProps> = (props) => {
 							/>
 						))}
 				</div>
-				<div className='flex flex-col flex-1 gap-4'>
+				<div className='flex flex-col flex-1 flex-grow-0 gap-4'>
 					{props.notes
 						.filter((t, idx) => idx % 2 !== 0)
 						.map((note) => (
