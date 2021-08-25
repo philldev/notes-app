@@ -277,7 +277,7 @@ type ContextValue = {
 const NotesContext = createContext<undefined | ContextValue>(undefined)
 
 export const NotesProvider: FC = ({ children }) => {
-	const [state, dispatch] = useReducer(notesReducer, { notes, folders })
+	const [state, dispatch] = useReducer(notesReducer, { notes : [], folders: [] })
 
 	const addNote = (note: Note) => {
 		dispatch({

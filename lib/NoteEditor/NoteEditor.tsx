@@ -9,6 +9,8 @@ import NoteEditorCover from './Components/NoteEditorCover/NoteEditorCover'
 import NoteEditorToolbar from './Components/NoteEditorToolbar/NoteEditorToolbar'
 import NoteTitle from './Components/NoteTitle/NoteTitle'
 import NoteEditorHeader from './NoteEditorHeader'
+import { Button } from '../../components'
+import NoteEditorActions from './NoteEditorActions'
 
 interface NoteEditorProps{
 	note? : Note
@@ -28,6 +30,7 @@ const NoteEditor : FC<NoteEditorProps> = ({note, folder}) => {
 					<NoteEditorBlock />
 				</NoteEditorContentWrapper>
 			</NoteEditorWrapper>
+			<NoteEditorActions />
 		</NoteEditorProvider>
 	)
 }

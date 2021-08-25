@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import NoteEditor from '../NoteEditor/NoteEditor'
-import { notes } from '../NotesProvider/NotesProvider'
+import { useNotes } from '../NotesProvider/NotesProvider'
 import { AsyncStatus, Note } from '../types'
 
 interface NoteEditProps {
@@ -19,6 +19,9 @@ const initialState: NoteEditState = {
 
 const useNoteEdit = ({ noteId }: NoteEditProps) => {
 	const [state, setState] = useState(initialState)
+	const {
+		state: { notes },
+	} = useNotes()
 
 	useEffect(() => {
 		const fetchNote = () => {
@@ -37,7 +40,7 @@ const useNoteEdit = ({ noteId }: NoteEditProps) => {
 		}
 
 		fetchNote()
-	}, [noteId])
+	}, [noteId, notes])
 
 	return {
 		isLoading: state.status === 'Loading',
