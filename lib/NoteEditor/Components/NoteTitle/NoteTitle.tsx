@@ -1,22 +1,17 @@
 import NoteTitleEditable from './NoteTitleEditable'
 import { useNoteEditor } from '../../Context/NoteEditorContext'
-import { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
+import { useDebouncedCallback } from 'use-debounce'
+import { useNotes } from '../../../NotesProvider/NotesProvider'
+import { Note } from '../../../types'
 
 const NoteTitle = () => {
-	const {
-		state: { title: stateTitle },
-		dispatch,
-	} = useNoteEditor()
-
-	const title = useMemo(() => stateTitle, [stateTitle])
-	return (
-		<NoteTitleEditable
-			title={title}
-			onUpdate={(titleText) => {
-				dispatch({ type: 'UPDATE_TITLE', payload: { text : titleText } })
-			}}
-		/>
-	)
+	const { state, dispatch } = useNoteEditor()
+	const { updateNote } = useNotes()
+	const handleUpdateTitle = (titleText: string) => {
+		dispatch({ type: 'UPDATE_TITLE', payload: { text: titleText } })
+	}
+	return <NoteTitleEditable title={state.title} onUpdate={handleUpdateTitle} />
 }
 
 export default NoteTitle

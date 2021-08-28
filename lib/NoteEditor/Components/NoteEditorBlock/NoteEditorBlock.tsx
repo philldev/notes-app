@@ -1,3 +1,6 @@
+import { useDebouncedCallback } from 'use-debounce'
+import { useNotes } from '../../../NotesProvider/NotesProvider'
+import { Note } from '../../../types'
 import {
 	createTextBlock,
 	createTodoBlock,
@@ -7,7 +10,12 @@ import AddBlockButton from './AddBlockButton'
 import NoteEditorBlocks from './NoteEditorBlocks'
 
 const NoteEditorBlock = () => {
-	const { state, dispatch } = useNoteEditor()
+	const { state: note, dispatch } = useNoteEditor()
+	const { updateNote } = useNotes()
+	const debounce = useDebouncedCallback((note: Note) => {
+		updateNote(note)
+	}, 350)
+
 	return (
 		<>
 			<NoteEditorBlocks
@@ -18,6 +26,7 @@ const NoteEditorBlock = () => {
 							blockId: block.id,
 						},
 					})
+					updateNote(note)
 				}}
 				onTodoItemDelete={(todo, todoBlock) => {
 					dispatch({
@@ -27,6 +36,25 @@ const NoteEditorBlock = () => {
 							blockId: todoBlock.id,
 						},
 					})
+					updateNote(note)
+				}}
+				onTextBlockDelete={(textBlock) => {
+					dispatch({
+						type: 'DELETE_BLOCK',
+						payload: {
+							blockId: textBlock.id,
+						},
+					})
+					updateNote(note)
+				}}
+				onTodoBlockDelete={(todoBlock) => {
+					dispatch({
+						type: 'DELETE_BLOCK',
+						payload: {
+							blockId: todoBlock.id,
+						},
+					})
+					updateNote(note)
 				}}
 				onTextBlockUpdate={(textBlock) => {
 					dispatch({
@@ -36,22 +64,7 @@ const NoteEditorBlock = () => {
 							blockId: textBlock.id,
 						},
 					})
-				}}
-				onTextBlockDelete={(textBlock) => {
-					dispatch({
-						type: 'DELETE_BLOCK',
-						payload: {
-							blockId: textBlock.id,
-						},
-					})
-				}}
-				onTodoBlockDelete={(todoBlock) => {
-					dispatch({
-						type: 'DELETE_BLOCK',
-						payload: {
-							blockId: todoBlock.id,
-						},
-					})
+					debounce(note)
 				}}
 				onTodoItemUpdate={(updatedTodo, todoBlock) => {
 					dispatch({
@@ -62,8 +75,9 @@ const NoteEditorBlock = () => {
 							blockId: todoBlock.id,
 						},
 					})
+					debounce(note)
 				}}
-				blocks={state.blocks}
+				blocks={note.blocks}
 			/>
 			<AddBlockButton
 				onBlockAdd={(type) => {
@@ -73,6 +87,7 @@ const NoteEditorBlock = () => {
 							block: type === 'text' ? createTextBlock() : createTodoBlock(),
 						},
 					})
+					updateNote(note)
 				}}
 			/>
 		</>

@@ -1,4 +1,4 @@
-import { createContext, FC, useContext, useReducer } from 'react'
+import { createContext, FC, useContext, useMemo, useReducer } from 'react'
 import { Folder, Note } from '../types'
 import { v4 } from 'uuid'
 
@@ -296,12 +296,16 @@ export const NotesProvider: FC = ({ children }) => {
 		})
 	}
 
-	const updateNote = (note: Note) => {
-		dispatch({
-			type: 'UPDATE_NOTE',
-			payload: { updatedNote: note, noteId: note.id },
-		})
-	}
+	const updateNote = useMemo(
+		() => (note: Note) => {
+			console.log(note.title)
+			dispatch({
+				type: 'UPDATE_NOTE',
+				payload: { updatedNote: note, noteId: note.id },
+			})
+		},
+		[]
+	)
 
 	const deleteNote = (note: Note) => {
 		dispatch({
@@ -311,7 +315,9 @@ export const NotesProvider: FC = ({ children }) => {
 	}
 
 	return (
-		<NotesContext.Provider value={{ state, deleteNote, updateNote, addNote, addFolder }}>
+		<NotesContext.Provider
+			value={{ state, deleteNote, updateNote, addNote, addFolder }}
+		>
 			{children}
 		</NotesContext.Provider>
 	)

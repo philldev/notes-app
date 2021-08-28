@@ -40,7 +40,7 @@ const NoteBox: FC<NoteBoxProps> = (props) => {
 				</div>
 			) : (
 				<div className='px-3 mb-4'>
-					{props.note.blocks?.slice(0, 1).map((body) =>
+					{props.note.blocks?.slice(0, 2).map((body) =>
 						body.type === 'todos' ? (
 							<div key={body.id} className='mb-2'>
 								{body.todos && (

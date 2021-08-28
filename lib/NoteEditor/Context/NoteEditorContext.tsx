@@ -2,7 +2,14 @@ import { Dispatch, useContext, useEffect, useReducer } from 'react'
 import { createContext, FC } from 'react'
 import { v4 } from 'uuid'
 import { useNotes } from '../../NotesProvider/NotesProvider'
-import { Folder, Note, NoteBlock, TextBlock, Todo, TodoBlock } from '../../types'
+import {
+	Folder,
+	Note,
+	NoteBlock,
+	TextBlock,
+	Todo,
+	TodoBlock,
+} from '../../types'
 
 interface NoteEditorState extends Note {}
 
@@ -299,28 +306,25 @@ export const createNewNote = (folder: Folder): NoteEditorState => ({
 	coverUrl: null,
 	blocks: [{ type: 'text', id: Date.now().toString(), text: '' }],
 	createdAt: new Date().toISOString(),
-	folder
+	folder,
 })
 
-
 interface NoteEditorProviderProps {
-	note : Note
-	folder? : Folder
+	note: Note
+	folder?: Folder
 }
 
 export const NoteEditorProvider: FC<NoteEditorProviderProps> = ({
 	children,
 	note,
-	folder
 }) => {
-	const [state, dispatch] = useReducer(
-		noteEditorReducer,
-		note
-	)
+	const [state, dispatch] = useReducer(noteEditorReducer, note)
+	const { updateNote } = useNotes()
 
-	const {addNote} = useNotes()
-
-
+	useEffect(() => {
+		updateNote(state)
+	}, [state, updateNote])
+	
 	return (
 		<NoteEditorContext.Provider
 			value={{

@@ -2,7 +2,7 @@ import { FC, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
 
 interface NoteTitleEditableProps {
-	title?: string
+	title: string
 	onUpdate: (title: string) => void
 }
 
@@ -21,9 +21,10 @@ const NoteTitleEditable: FC<NoteTitleEditableProps> = (props) => {
 				</p>
 			) : null}
 			<ContentEditable
-				html={html.current}
+				html={props.title}
 				className='relative z-10 text-lg font-bold outline-none'
 				onChange={(e) => {
+					console.log(props.title);
 					e.target.value.length > 0
 						? setHidePlaceholder(true)
 						: setHidePlaceholder(false)
