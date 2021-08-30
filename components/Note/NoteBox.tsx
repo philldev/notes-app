@@ -45,7 +45,7 @@ const NoteBox: FC<NoteBoxProps> = (props) => {
 							<div key={body.id} className='mb-2'>
 								{body.todos && (
 									<div className='flex flex-col gap-3'>
-										{body.todos.map((t, idx) => (
+										{body.todos.slice(0, 3).map((t, idx) => (
 											<NoteTodoItemEditable
 												index={idx}
 												key={t.id}

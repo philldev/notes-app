@@ -11,10 +11,6 @@ import NoteEditorBlocks from './NoteEditorBlocks'
 
 const NoteEditorBlock = () => {
 	const { state: note, dispatch } = useNoteEditor()
-	const { updateNote } = useNotes()
-	const debounce = useDebouncedCallback((note: Note) => {
-		updateNote(note)
-	}, 350)
 
 	return (
 		<>
@@ -26,7 +22,6 @@ const NoteEditorBlock = () => {
 							blockId: block.id,
 						},
 					})
-					updateNote(note)
 				}}
 				onTodoItemDelete={(todo, todoBlock) => {
 					dispatch({
@@ -36,7 +31,6 @@ const NoteEditorBlock = () => {
 							blockId: todoBlock.id,
 						},
 					})
-					updateNote(note)
 				}}
 				onTextBlockDelete={(textBlock) => {
 					dispatch({
@@ -45,7 +39,6 @@ const NoteEditorBlock = () => {
 							blockId: textBlock.id,
 						},
 					})
-					updateNote(note)
 				}}
 				onTodoBlockDelete={(todoBlock) => {
 					dispatch({
@@ -54,7 +47,6 @@ const NoteEditorBlock = () => {
 							blockId: todoBlock.id,
 						},
 					})
-					updateNote(note)
 				}}
 				onTextBlockUpdate={(textBlock) => {
 					dispatch({
@@ -64,7 +56,6 @@ const NoteEditorBlock = () => {
 							blockId: textBlock.id,
 						},
 					})
-					debounce(note)
 				}}
 				onTodoItemUpdate={(updatedTodo, todoBlock) => {
 					dispatch({
@@ -75,7 +66,6 @@ const NoteEditorBlock = () => {
 							blockId: todoBlock.id,
 						},
 					})
-					debounce(note)
 				}}
 				blocks={note.blocks}
 			/>
@@ -87,7 +77,6 @@ const NoteEditorBlock = () => {
 							block: type === 'text' ? createTextBlock() : createTodoBlock(),
 						},
 					})
-					updateNote(note)
 				}}
 			/>
 		</>

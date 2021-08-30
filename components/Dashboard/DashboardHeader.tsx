@@ -5,7 +5,7 @@ const DashboardHeader = () => {
 		<div className='flex items-center justify-between px-4 h-14'>
 			<h3 className='text-xl font-bold'>Notes</h3>
 			<div className='flex items-center gap-3'>
-				<button className='text-text-2'>Edit</button>
+				<button className='text-text-2'>Add Note</button>
 				<button>
 					<SearchIcon className='w-6 h-6 text-text-2' />
 				</button>

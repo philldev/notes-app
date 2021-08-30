@@ -48,7 +48,7 @@ const useFolder = ({ folderId }: FolderProps) => {
 		}
 
 		fetchFolder()
-	}, [folderId, folders, notes ])
+	}, [folderId, folders, notes])
 
 	return {
 		isLoading: state.status === 'Loading',
@@ -73,6 +73,7 @@ const Folder: FC<FolderProps> = (props) => {
 		<>
 			<FolderHeader name={folder.name} />
 			<NoteList
+				folder={folder}
 				notes={folderNotes!}
 				onNoteBoxClick={(note) => {
 					router.push(`/notes/${note.id}`)

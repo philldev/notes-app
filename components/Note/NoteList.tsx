@@ -1,11 +1,12 @@
 import { FC } from 'react'
-import { Note } from '../../lib/types'
+import { Folder, Note } from '../../lib/types'
 import AddNoteButton from './AddNoteButton'
 import NoteBox from './NoteBox'
 
 interface NoteListProps {
 	notes: Note[]
 	onNoteBoxClick?: (note: Note) => void
+	folder? : Folder
 }
 
 const NoteList: FC<NoteListProps> = (props) => {
@@ -39,7 +40,7 @@ const NoteList: FC<NoteListProps> = (props) => {
 						))}
 				</div>
 			</div>
-			<AddNoteButton />
+			<AddNoteButton folder={props.folder} />
 		</>
 	)
 }

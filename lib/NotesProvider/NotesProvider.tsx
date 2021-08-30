@@ -289,12 +289,15 @@ export const NotesProvider: FC = ({ children }) => {
 		})
 	}
 
-	const addNote = (note: Note) => {
-		dispatch({
-			type: 'ADD_NOTE',
-			payload: { note },
-		})
-	}
+	const addNote = useMemo(
+		() => (note: Note) => {
+			dispatch({
+				type: 'ADD_NOTE',
+				payload: { note },
+			})
+		},
+		[]
+	)
 
 	const updateNote = useMemo(
 		() => (note: Note) => {
