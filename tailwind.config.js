@@ -37,6 +37,7 @@ module.exports = {
 			borderColor: ['active'],
 			borderOpacity: ['hover'],
 			opacity: ['disabled'],
+			border: ['hover'],
 		},
 	},
 	plugins: [],

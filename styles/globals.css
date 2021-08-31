@@ -8,3 +8,22 @@
 	font-size: inherit !important;
 	font-family: inherit !important;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #161615;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #1C1C1A;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #222220;
+}

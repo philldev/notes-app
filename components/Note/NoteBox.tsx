@@ -13,7 +13,10 @@ interface NoteBoxProps {
 
 const NoteBox: FC<NoteBoxProps> = (props) => {
 	return (
-		<div onClick={props.onClick} className='pb-3 rounded-2xl bg-bg-2'>
+		<div
+			onClick={props.onClick}
+			className='pb-3 border cursor-pointer border-bg-1 rounded-2xl bg-bg-2 hover:border-border-2'
+		>
 			{props.note.coverUrl && (
 				<div className='relative w-full h-20 mb-3'>
 					<Image

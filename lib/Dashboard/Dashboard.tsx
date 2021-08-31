@@ -26,7 +26,7 @@ const Dashboard: FC<DashboardProps> = (props) => {
 					<DashboardNavigation />
 				</Tab.List>
 				<Tab.Panels as={Fragment}>
-					<Tab.Panel>
+					<Tab.Panel as={Fragment}>
 						<AllNotes />
 					</Tab.Panel>
 					<Tab.Panel>
