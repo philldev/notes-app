@@ -1,7 +1,8 @@
-import { DocumentAddIcon } from '@heroicons/react/outline'
+import { DocumentAddIcon, PlusIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 import { FC } from 'react'
 import { Folder } from '../../lib/types'
+import { Button } from '../button'
 
 interface AddNoteButtonProps {
 	folder?: Folder
@@ -13,12 +14,13 @@ const AddNoteButton: FC<AddNoteButtonProps> = (props) => {
 		? newNoteRoute + '?folder=' + props.folder.id
 		: newNoteRoute
 	return (
-		<Link href={href}>
-			<a className='fixed flex flex-col items-center justify-center w-20 h-20 border-2 rounded-full bottom-8 right-4 bg-bg-2 border-border-1 text-text-1'>
-				<DocumentAddIcon className='w-5 h-5 text-accent-primary' />
-				<span className='text-xs font-bold text-accent-primary'>New Note</span>
-			</a>
-		</Link>
+		<div className='px-4 my-4'>
+			<Link href={href} passHref>
+				<Button  as='a' className='flex items-center'>
+					<span className='font-bold'>Take a note</span> <PlusIcon className='w-4 h-4 ml-auto' />
+				</Button>
+			</Link>
+		</div>
 	)
 }
 

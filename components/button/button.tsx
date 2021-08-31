@@ -32,11 +32,13 @@ const sizes: { [key in ButtonSize]: string } = {
 	lg: 'h-12 px-6 text-lg',
 }
 
-const Button: FC<ButtonProps> = ({ children, className, ...rest }) => {
+const Button: FC<ButtonProps> = ({ children, className, as, ...rest }) => {
 	const { variant = 'solid', color = 'primary', size = 'base' } = rest
 
+	const Component =  as || 'button'
+
 	return (
-		<button
+		<Component
 			className={`transition-all rounded-md items-center justify-center flex hover:opacity-80 disabled:opacity-50
 			${sizes[size]}
 			${
@@ -54,7 +56,7 @@ const Button: FC<ButtonProps> = ({ children, className, ...rest }) => {
 			{...rest}
 		>
 			{children}
-		</button>
+		</Component>
 	)
 }
 

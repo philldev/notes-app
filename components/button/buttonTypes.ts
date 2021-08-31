@@ -1,3 +1,5 @@
+import React from "react"
+
 type ButtonVariant = 'solid' | 'outlined' | 'transparent'
 
 export type ButtonSize = 'sm' | 'base' | 'md' | 'lg'
@@ -13,4 +15,5 @@ export interface ButtonProps extends ReactBtnProps {
 	variant?: ButtonVariant
 	size?: ButtonSize
 	color?: ButtonColor
+	as? : React.ElementType<any>
 }
