@@ -9,6 +9,7 @@ import UnsplashPhotos from './Unsplash'
 const NoteEditorCover = () => {
 	const {
 		state: { coverUrl },
+		dispatch,
 	} = useNoteEditor()
 	if (!coverUrl) return null
 	return (
@@ -96,7 +97,14 @@ const NoteEditorCover = () => {
 													/>
 												</Tab.Panel>
 												<Tab.Panel>
-													<UnsplashPhotos />
+													<UnsplashPhotos
+														onPhotoSelect={(url) => {
+															dispatch({
+																type: 'UPDATE_COVER_URL',
+																payload: { url },
+															})
+														}}
+													/>
 												</Tab.Panel>
 											</Tab.Panels>
 										</Tab.Group>

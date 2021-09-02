@@ -56,6 +56,8 @@ type UnsplashPhoto = {
 	width: 6336
 }
 
+let cachedImages : null | UnsplashPhoto[] = null
+
 const useUnsplash = () => {
 	const [state, setState] = useState<{
 		isLoading: boolean
@@ -77,24 +79,37 @@ const useUnsplash = () => {
 	const { isLoading, isError, photos } = state
 
 	useEffect(() => {
-		unsplashApi.photos.getRandom({ count: 5 }).then((result) => {
-			toggleLoading()
-			if (result.type === 'success') {
-				let photos = result.response as any
-				updatePhotos(photos)
+		
+		const fetchImages = () => {
+			unsplashApi.photos.getRandom({ count: 6 }).then((result) => {
 				toggleLoading()
-			} else if (result.type === 'error') {
-				toggleError()
-			}
-		})
+				if (result.type === 'success') {
+					let photos = result.response as any
+					updatePhotos(photos)
+					cachedImages = photos
+					toggleLoading()
+				} else if (result.type === 'error') {
+					toggleError()
+				}
+			})
+		}
+
+		if(cachedImages) {
+			updatePhotos(cachedImages)
+		} else {
+			fetchImages()
+		}
+
 	}, [])
 
 	return { isLoading, photos, isError }
 }
 
-interface UnsplashPhotosProps {}
+interface UnsplashPhotosProps {
+	onPhotoSelect : (url : string) => void
+}
 
-const UnsplashPhotos: FC<UnsplashPhotosProps> = () => {
+const UnsplashPhotos: FC<UnsplashPhotosProps> = (props) => {
 	const { isError, isLoading, photos } = useUnsplash()
 	if (isLoading) {
 		return <div>Loading...</div>
@@ -103,7 +118,7 @@ const UnsplashPhotos: FC<UnsplashPhotosProps> = () => {
 	return (
 		<div className='grid grid-cols-2 gap-1 p-2'>
 			{photos.map((p, i) => (
-				<div className='relative h-20 cursor-pointer' key={i}>
+				<div className='relative h-20 cursor-pointer' key={i} onClick={() => props.onPhotoSelect(p.urls.small)}>
 					<Image
 						className=''
 						layout='fill'
