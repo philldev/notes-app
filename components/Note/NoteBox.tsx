@@ -29,7 +29,7 @@ const NoteBox: FC<NoteBoxProps> = (props) => {
 				</div>
 			)}
 			{props.note.title && (
-				<h4 className='px-3 pt-3 mb-4 font-bold'>{props.note.title}</h4>
+				<h4 className='px-3 pt-3 mb-2 font-bold'>{props.note.title}</h4>
 			)}
 			{props.note.location && (
 				<h4 className='flex gap-3 px-3 mb-3 text-xs text-text-2'>
@@ -42,12 +42,12 @@ const NoteBox: FC<NoteBoxProps> = (props) => {
 					<LockClosedIcon className='relative w-9 h-9 -top-3' />
 				</div>
 			) : (
-				<div className='px-3 mb-4'>
+				<div className='flex flex-col gap-1 px-3 mb-2'>
 					{props.note.blocks?.slice(0, 2).map((body) =>
 						body.type === 'todos' ? (
 							<div key={body.id} className='mb-2'>
 								{body.todos && (
-									<div className='flex flex-col gap-3'>
+									<div className='flex flex-col gap-1'>
 										{body.todos.slice(0, 3).map((t, idx) => (
 											<NoteTodoItemEditable
 												index={idx}
@@ -56,6 +56,9 @@ const NoteBox: FC<NoteBoxProps> = (props) => {
 												text={t.text}
 											/>
 										))}
+										{body.todos.length - 3 >= 1 ? (
+											<span className='text-xs'>{body.todos.length - 3} more todo...</span>
+										) : null}
 									</div>
 								)}
 							</div>
@@ -63,7 +66,12 @@ const NoteBox: FC<NoteBoxProps> = (props) => {
 							<div className='mb-2'>
 								<div
 									className='overflow-hidden text-xs'
-									dangerouslySetInnerHTML={{ __html: body.text }}
+									dangerouslySetInnerHTML={{
+										__html:
+											body.text.length > 50
+												? body.text.substring(0, 50) + '...'
+												: body.text,
+									}}
 								/>
 							</div>
 						)

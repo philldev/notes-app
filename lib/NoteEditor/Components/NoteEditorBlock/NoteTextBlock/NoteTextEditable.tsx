@@ -1,5 +1,6 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
+import sanitize from 'sanitize-html'
 
 interface NoteTextEditableProps {
 	focused?: boolean
@@ -54,9 +55,9 @@ const NoteTextEditable: FC<NoteTextEditableProps> = (props) => {
 					e.target.value.length > 0
 						? setHidePlaceholder(true)
 						: setHidePlaceholder(false)
-					html.current = e.target.value
-						.replace(/<div>/g, '<br>')
-						.replace(/<\/div>/g, '')
+					html.current = sanitize(
+						e.target.value.replace(/<div>/g, '<br>').replace(/<\/div>/g, ''), {allowedTags : ['br']}
+					)
 					props.onTextChange(html.current)
 				}}
 				placeholder='Take a note'
