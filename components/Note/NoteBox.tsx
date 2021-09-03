@@ -50,6 +50,7 @@ const NoteBox: FC<NoteBoxProps> = (props) => {
 									<div className='flex flex-col gap-1'>
 										{body.todos.slice(0, 3).map((t, idx) => (
 											<NoteTodoItemEditable
+											editing={false}
 												index={idx}
 												key={t.id}
 												completed={t.completed}

@@ -102,10 +102,13 @@ const handleRemoveCoverUrl = (state: NoteEditorState): NoteEditorState => {
 	}
 }
 
+export const MAX_BLOCK = 5
+
 const handleAddBlock = (
 	newBlock: NoteBlock,
 	state: NoteEditorState
 ): NoteEditorState => {
+	if(state.blocks.length === 5) return state
 	return {
 		...state,
 		blocks: [...state.blocks, newBlock],

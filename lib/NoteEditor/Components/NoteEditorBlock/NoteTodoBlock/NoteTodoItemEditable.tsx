@@ -5,7 +5,7 @@ import { Checkbox } from '../../../../../components/checkbox'
 interface NoteTodoItemEditableProps {
 	completed?: boolean
 	text?: string
-	editing?: boolean
+	editing: boolean
 	onEditingEnd?: (text: string) => void
 	onEnter?: () => void
 	onBackspaceWhenEmpty?: () => void
@@ -18,6 +18,9 @@ interface NoteTodoItemEditableProps {
 }
 
 const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
+
+	console.log(props.editing);
+
 	const text = useRef<string>(props.text ?? '')
 
 	const [hidePlaceholder, setHidePlaceholder] = useState(
@@ -76,12 +79,14 @@ const NoteTodoItemEditable: FC<NoteTodoItemEditableProps> = (props) => {
 						props.completed ? 'line-through text-text-2' : ''
 					}`}
 				/>
-				<button
-					onClick={props.onDeleteClick}
-					className='absolute right-0 z-20 p-1 text-xs text-opacity-75 transition-all rounded-md opacity-0 cursor-pointer group-hover:opacity-100 -top-1 text-accent-danger bg-bg-2'
-				>
-					Delete
-				</button>
+				{props.editing && (
+					<button
+						onClick={props.onDeleteClick}
+						className='absolute right-0 z-20 p-1 text-xs text-opacity-75 transition-all rounded-md opacity-0 cursor-pointer group-hover:opacity-100 -top-1 text-accent-danger bg-bg-2'
+					>
+						Delete
+					</button>
+				)}
 			</div>
 		</div>
 	)

@@ -11,6 +11,7 @@ import NoteTitle from './Components/NoteTitle/NoteTitle'
 import NoteEditorHeader from './NoteEditorHeader'
 import { Button } from '../../components'
 import NoteEditorActions from './NoteEditorActions'
+import BlockCount from './Components/NoteEditorBlock/BlockCount'
 
 interface NoteEditorProps{
 	note : Note
