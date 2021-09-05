@@ -1,4 +1,13 @@
-import { createContext, FC, useContext, useMemo, useReducer } from 'react'
+import {
+	createContext,
+	FC,
+	useContext,
+	useEffect,
+	useMemo,
+	useReducer,
+	useRef,
+	useState,
+} from 'react'
 import { Folder, Note } from '../types'
 import { v4 } from 'uuid'
 
@@ -166,6 +175,10 @@ type State = {
 
 type Action =
 	| {
+			type: 'FROM_LS'
+			payload: { state: State }
+	  }
+	| {
 			type: 'ADD_NOTE'
 			payload: { note: Note }
 	  }
@@ -244,6 +257,8 @@ const handleUpdateFolder = (
 
 const notesReducer = (state: State, action: Action): State => {
 	switch (action.type) {
+		case 'FROM_LS':
+			return action.payload.state
 		case 'ADD_NOTE':
 			return handleAddNote(state, action.payload.note)
 		case 'UPDATE_NOTE':
@@ -316,6 +331,33 @@ export const NotesProvider: FC = ({ children }) => {
 			payload: { noteId: note.id },
 		})
 	}
+
+	const [isInit, setIsInit] = useState(false)
+	
+	useEffect(() => {
+		if (isInit && window.localStorage) {
+			const lsState = window.localStorage.getItem('notes')
+			if (lsState) {
+				const initialState = JSON.parse(lsState) as State
+				dispatch({
+					type: 'FROM_LS',
+					payload: { state: initialState },
+				})
+			}
+		}
+	}, [isInit])
+	
+	useEffect(() => {
+		if (isInit && window.localStorage) {
+			const stringifyState = JSON.stringify(state)
+			window.localStorage.setItem('notes', stringifyState)
+		}
+	}, [state, isInit])
+
+
+	useEffect(() => {
+		setIsInit(true)
+	}, [])
 
 	return (
 		<NotesContext.Provider
