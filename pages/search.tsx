@@ -1,54 +1,28 @@
-import { FC } from 'react'
-import { Folder, Note } from '../../lib/types'
-import { Button } from '../button'
-import AddNoteButton from './AddNoteButton'
-import NoteBox from './NoteBox'
+import { useRouter } from 'next/router'
+import DashboardHeader from '../components/Dashboard/DashboardHeader'
+import Page from '../components/layout/Page'
+import NoteList from '../components/Note/NoteList'
+import { useNotes } from '../lib/NotesProvider/NotesProvider'
 
-interface NoteListProps {
-	notes: Note[]
-	onNoteBoxClick?: (note: Note) => void
-	folder?: Folder
-	hideAddButton?: boolean
-}
+const SearchPage = () => {
+	const router = useRouter()
+	const query = router.query.query as string
+	const { state } = useNotes()
+	const notes = state.notes.filter((n) =>
+		n.title.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+	)
 
-const NoteList: FC<NoteListProps> = (props) => {
 	return (
-		<>
-			{!props.hideAddButton && <AddNoteButton folder={props.folder} />}
-			{props.notes.length > 0 ? (
-				<div className='grid flex-1 grid-cols-2 gap-4 px-4 pt-2 overflow-y-scroll'>
-					<div className='flex flex-col flex-1 flex-grow-0 gap-4 pb-2'>
-						{props.notes
-							.filter((t, idx) => idx % 2 === 0)
-							.map((note) => (
-								<NoteBox
-									onClick={() => {
-										props.onNoteBoxClick?.(note)
-									}}
-									key={note.id}
-									note={note}
-								/>
-							))}
-					</div>
-					<div className='flex flex-col flex-1 flex-grow-0 gap-4 pb-2'>
-						{props.notes
-							.filter((t, idx) => idx % 2 !== 0)
-							.map((note) => (
-								<NoteBox
-									onClick={() => {
-										props.onNoteBoxClick?.(note)
-									}}
-									key={note.id}
-									note={note}
-								/>
-							))}
-					</div>
-				</div>
+		<Page>
+			<DashboardHeader showBackButton search={router.query.query as string} />
+			<p className='px-4 mb-2 text-2xl'>
+				Searching for &quot;{query}&quot; notes
+			</p>
+			{notes.length > 0 ? (
+				<NoteList hideAddButton notes={notes} />
 			) : (
 				<div className='flex flex-col items-center px-2 mt-4'>
-					<span className='mb-2 text-center text-text-2'>
-						Oops your notes is empty.
-					</span>
+					<span className='mb-2 text-center text-text-2'>Not Found.</span>
 					<svg
 						viewBox='0 0 24 30'
 						x='0px'
@@ -86,8 +60,8 @@ const NoteList: FC<NoteListProps> = (props) => {
 					</svg>
 				</div>
 			)}
-		</>
+		</Page>
 	)
 }
 
-export default NoteList
+export default SearchPage
