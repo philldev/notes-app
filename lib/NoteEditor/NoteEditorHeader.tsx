@@ -27,7 +27,7 @@ const NoteEditorHeader = () => {
 					<ArrowLeftIcon className='w-4 h-4 text-text-2' />
 				</button>
 				<h3 className='flex items-center flex-1 gap-2 text-text-2'>
-					<FolderIcon className='w-5 h-5' />
+					<FolderIcon className='w-4 h-4' />
 					<span className='flex-1'>{note.folder?.name}</span>
 				</h3>
 			</div>
