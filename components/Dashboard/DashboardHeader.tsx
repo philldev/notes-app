@@ -43,9 +43,6 @@ const DashboardHeader: FC<DashboardHeaderProps> = (props) => {
 						<SearchIcon className='w-6 h-6 text-text-2' />
 					</button>
 				</form>
-				<button>
-					<DotsCircleHorizontalIcon className='w-6 h-6 text-text-2' />
-				</button>
 			</div>
 		</div>
 	)
